@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="AI Signal Loop — AI-powered business consulting. Autonomous systems that generate content, qualify leads, and grow revenue while you sleep.">
+<meta property="og:title" content="AI Signal Loop™ — AI Business Consulting">
+<meta property="og:description" content="One insight per week. The AI system does the rest.">
+<meta property="og:url" content="https://aisignalloop.com">
+<title>AI Signal Loop™ — AI Business Consulting</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ── RESET & ROOT ── */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --ink:#0D1B2A;
+  --teal:#0A7A6E;
+  --teal2:#0EA898;
+  --gold:#C49A2A;
+  --gold2:#E8C15A;
+  --cream:#F6F1E9;
+  --white:#FFFFFF;
+  --mid:#5A6A7A;
+  --light:#EAF0F0;
+  --bg:#F2EEE6;
+}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);
+  font-family:'DM Sans',sans-serif;
+  color:var(--ink);
+  overflow-x:hidden;
+}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(13,27,42,0.96);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(10,122,110,0.3);
+  padding:0 2rem;
+  height:64px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.nav-wordmark{
+  font-family:'DM Sans',sans-serif;
+  font-size:.72rem;font-weight:600;
+  text-transform:uppercase;letter-spacing:.18em;
+  color:var(--white);
+}
+.nav-wordmark span{color:var(--gold2);}
+.nav-links{display:flex;align-items:center;gap:2rem;}
+.nav-links a{
+  font-size:.75rem;font-weight:500;text-transform:uppercase;
+  letter-spacing:.12em;color:rgba(255,255,255,.6);
+  text-decoration:none;transition:color .2s;
+}
+.nav-links a:hover{color:var(--teal2);}
+.nav-cta{
+  background:var(--teal);color:var(--white)!important;
+  padding:.5rem 1.2rem;border-radius:2px;
+  letter-spacing:.1em!important;
+  transition:background .2s!important;
+}
+.nav-cta:hover{background:var(--teal2)!important;}
+
+/* ── HERO ── */
+.hero{
+  min-height:100vh;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  align-items:center;
+  padding:100px 5vw 60px;
+  gap:4rem;
+  position:relative;
+  overflow:hidden;
+}
+/* animated orbital background */
+.hero-bg{
+  position:absolute;inset:0;
+  overflow:hidden;pointer-events:none;z-index:0;
+}
+.orbit-ring{
+  position:absolute;border-radius:50%;border:1px solid rgba(10,122,110,0.12);
+  top:50%;left:60%;transform:translate(-50%,-50%);
+  animation:spin linear infinite;
+}
+.orbit-ring:nth-child(1){width:400px;height:400px;animation-duration:40s;}
+.orbit-ring:nth-child(2){width:620px;height:620px;animation-duration:65s;animation-direction:reverse;border-color:rgba(196,154,42,0.08);}
+.orbit-ring:nth-child(3){width:840px;height:840px;animation-duration:90s;border-color:rgba(10,122,110,0.06);}
+.orbit-ring:nth-child(4){width:1060px;height:1060px;animation-duration:120s;animation-direction:reverse;border-color:rgba(196,154,42,0.05);}
+.orbit-dot{
+  position:absolute;width:8px;height:8px;border-radius:50%;
+  top:0;left:50%;transform:translate(-50%,-50%);
+}
+.orbit-ring:nth-child(1) .orbit-dot{background:var(--teal2);box-shadow:0 0 12px var(--teal2);}
+.orbit-ring:nth-child(2) .orbit-dot{background:var(--gold);box-shadow:0 0 10px var(--gold);top:auto;bottom:0;}
+@keyframes spin{from{transform:translate(-50%,-50%) rotate(0deg);}to{transform:translate(-50%,-50%) rotate(360deg);}}
+
+.hero-content{position:relative;z-index:1;}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:.6rem;
+  font-family:'Space Mono',monospace;
+  font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.2em;
+  color:var(--teal);margin-bottom:1.5rem;
+}
+.hero-eyebrow::before{content:'';width:24px;height:1px;background:var(--teal);}
+h1{
+  font-family:'Playfair Display',Georgia,serif;
+  font-size:clamp(2.6rem,5vw,4.2rem);
+  font-weight:900;line-height:1.08;
+  color:var(--ink);
+  margin-bottom:1.5rem;
+  letter-spacing:-.02em;
+}
+h1 em{font-style:italic;color:var(--teal);}
+h1 .gold{color:var(--gold);}
+.hero-sub{
+  font-size:1.1rem;line-height:1.75;color:var(--mid);
+  max-width:500px;margin-bottom:2.5rem;
+}
+.hero-actions{display:flex;align-items:center;gap:1.2rem;flex-wrap:wrap;}
+.btn-primary{
+  display:inline-flex;align-items:center;gap:.6rem;
+  background:var(--teal);color:var(--white);
+  padding:.9rem 2rem;border-radius:2px;
+  font-size:.8rem;font-weight:600;text-transform:uppercase;letter-spacing:.14em;
+  text-decoration:none;border:none;cursor:pointer;
+  transition:background .2s,transform .15s;
+}
+.btn-primary:hover{background:var(--teal2);transform:translateY(-1px);}
+.btn-secondary{
+  display:inline-flex;align-items:center;gap:.6rem;
+  color:var(--teal);
+  padding:.9rem 1.6rem;border-radius:2px;
+  font-size:.8rem;font-weight:600;text-transform:uppercase;letter-spacing:.14em;
+  text-decoration:none;border:1.5px solid var(--teal);
+  transition:all .2s;
+}
+.btn-secondary:hover{background:var(--teal);color:var(--white);}
+.hero-proof{
+  display:flex;align-items:center;gap:1rem;
+  margin-top:2rem;
+  font-size:.72rem;color:var(--mid);font-style:italic;
+}
+.hero-proof::before{content:'';width:32px;height:1px;background:var(--mid);}
+
+/* Hero visual side */
+.hero-visual{
+  position:relative;z-index:1;
+  display:flex;align-items:center;justify-content:center;
+}
+.hero-logo-display{
+  position:relative;
+  display:flex;align-items:center;justify-content:center;
+}
+/* Pulse glow behind icon */
+.logo-glow{
+  position:absolute;
+  width:220px;height:220px;border-radius:50%;
+  background:radial-gradient(circle,rgba(10,122,110,0.18) 0%,transparent 70%);
+  animation:pulse 3s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:.7;}50%{transform:scale(1.1);opacity:1;}}
+
+/* ── TICKER ── */
+.ticker{
+  background:var(--ink);
+  border-top:1px solid rgba(10,122,110,0.3);
+  border-bottom:1px solid rgba(10,122,110,0.3);
+  padding:.7rem 0;overflow:hidden;
+}
+.ticker-track{
+  display:flex;gap:3rem;
+  animation:ticker 30s linear infinite;
+  white-space:nowrap;
+}
+.ticker-item{
+  font-family:'Space Mono',monospace;
+  font-size:.62rem;font-weight:400;text-transform:uppercase;
+  letter-spacing:.15em;color:rgba(255,255,255,.45);
+  flex-shrink:0;
+}
+.ticker-item .dot{color:var(--teal2);margin-right:1rem;}
+@keyframes ticker{from{transform:translateX(0);}to{transform:translateX(-50%);}}</p>
+
+/* ── SECTION WRAPPER ── */
+.section{padding:7rem 5vw;}
+.section-label{
+  font-family:'Space Mono',monospace;
+  font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.22em;
+  color:var(--teal);margin-bottom:1rem;
+  display:flex;align-items:center;gap:.8rem;
+}
+.section-label::after{content:'';flex:1;max-width:60px;height:1px;background:var(--teal);}
+h2{
+  font-family:'Playfair Display',Georgia,serif;
+  font-size:clamp(2rem,4vw,3rem);
+  font-weight:700;line-height:1.15;
+  color:var(--ink);margin-bottom:1.2rem;
+  letter-spacing:-.01em;
+}
+h2 em{font-style:italic;color:var(--teal);}
+.section-sub{font-size:1rem;line-height:1.75;color:var(--mid);max-width:560px;}
+
+/* ── HOW IT WORKS ── */
+.how-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1px;background:rgba(10,122,110,0.15);
+  margin-top:4rem;border:1px solid rgba(10,122,110,0.15);
+}
+.how-card{
+  background:var(--white);
+  padding:2.5rem 2rem;
+  position:relative;
+  transition:background .2s;
+}
+.how-card:hover{background:var(--light);}
+.how-num{
+  font-family:'Space Mono',monospace;
+  font-size:3rem;font-weight:700;
+  color:rgba(10,122,110,0.1);
+  line-height:1;margin-bottom:1.2rem;
+  transition:color .2s;
+}
+.how-card:hover .how-num{color:rgba(10,122,110,0.2);}
+.how-card h3{
+  font-family:'Playfair Display',serif;
+  font-size:1.25rem;font-weight:700;
+  color:var(--ink);margin-bottom:.8rem;
+}
+.how-card p{font-size:.88rem;line-height:1.7;color:var(--mid);}
+.how-arrow{
+  position:absolute;top:2.5rem;right:2rem;
+  font-size:1.5rem;color:var(--teal);opacity:.3;
+  transition:opacity .2s,transform .2s;
+}
+.how-card:hover .how-arrow{opacity:.8;transform:translateX(4px);}
+
+/* ── SERVICES ── */
+.services-bg{background:var(--ink);}
+.services-bg h2{color:var(--white);}
+.services-bg h2 em{color:var(--teal2);}
+.services-bg .section-label{color:var(--teal2);}
+.services-bg .section-label::after{background:var(--teal2);}
+.services-bg .section-sub{color:rgba(255,255,255,.6);}
+
+.services-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);
+  gap:1.5rem;margin-top:4rem;
+}
+.service-card{
+  border:1px solid rgba(255,255,255,.08);
+  padding:2.5rem;
+  position:relative;overflow:hidden;
+  transition:border-color .2s,background .2s;
+}
+.service-card::before{
+  content:'';position:absolute;
+  top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--teal),var(--teal2));
+  transform:scaleX(0);transform-origin:left;
+  transition:transform .3s;
+}
+.service-card:hover{border-color:rgba(10,158,144,0.3);background:rgba(10,122,110,0.05);}
+.service-card:hover::before{transform:scaleX(1);}
+.service-icon{font-size:1.8rem;margin-bottom:1.2rem;}
+.service-card h3{
+  font-family:'Playfair Display',serif;
+  font-size:1.2rem;font-weight:700;color:var(--white);
+  margin-bottom:.8rem;
+}
+.service-card p{font-size:.88rem;line-height:1.7;color:rgba(255,255,255,.55);}
+.service-price{
+  display:inline-block;
+  margin-top:1.2rem;
+  font-family:'Space Mono',monospace;
+  font-size:.65rem;font-weight:700;
+  text-transform:uppercase;letter-spacing:.12em;
+  color:var(--gold2);
+  border:1px solid rgba(196,154,42,0.3);
+  padding:.3rem .7rem;border-radius:1px;
+}
+
+/* ── PROOF / STATS ── */
+.stats-row{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:1px;background:rgba(10,122,110,0.15);
+  border:1px solid rgba(10,122,110,0.15);
+  margin-top:4rem;
+}
+.stat-cell{
+  background:var(--white);
+  padding:2.5rem 2rem;text-align:center;
+}
+.stat-num{
+  font-family:'Playfair Display',serif;
+  font-size:2.8rem;font-weight:900;
+  color:var(--teal);line-height:1;
+  margin-bottom:.4rem;
+}
+.stat-label{
+  font-size:.72rem;font-weight:500;text-transform:uppercase;
+  letter-spacing:.14em;color:var(--mid);
+}
+
+/* ── FREE STARTER / EMAIL CAPTURE ── */
+.cta-section{
+  background:var(--teal);
+  padding:6rem 5vw;
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:4rem;align-items:center;
+}
+.cta-section h2{color:var(--white);font-size:clamp(1.8rem,3.5vw,2.6rem);}
+.cta-section h2 em{color:var(--gold2);}
+.cta-section p{color:rgba(255,255,255,.75);font-size:1rem;line-height:1.75;margin-top:1rem;}
+.cta-form{
+  background:rgba(0,0,0,.15);
+  padding:2.5rem;border-radius:2px;
+}
+.cta-form h3{
+  font-family:'Playfair Display',serif;
+  font-size:1.3rem;font-weight:700;color:var(--white);
+  margin-bottom:.5rem;
+}
+.cta-form .form-sub{
+  font-size:.8rem;color:rgba(255,255,255,.6);
+  margin-bottom:1.8rem;line-height:1.5;
+}
+.form-row{display:flex;gap:.8rem;margin-bottom:1rem;}
+.form-input{
+  flex:1;
+  background:rgba(255,255,255,.1);
+  border:1px solid rgba(255,255,255,.2);
+  color:var(--white);
+  padding:.75rem 1rem;
+  font-family:'DM Sans',sans-serif;
+  font-size:.9rem;
+  border-radius:2px;
+  outline:none;
+  transition:border-color .2s;
+}
+.form-input::placeholder{color:rgba(255,255,255,.4);}
+.form-input:focus{border-color:var(--gold2);}
+.btn-form{
+  background:var(--gold);color:var(--white);
+  padding:.75rem 1.4rem;
+  border:none;border-radius:2px;
+  font-family:'DM Sans',sans-serif;
+  font-size:.8rem;font-weight:600;
+  text-transform:uppercase;letter-spacing:.12em;
+  cursor:pointer;transition:background .2s;
+  white-space:nowrap;
+}
+.btn-form:hover{background:var(--gold2);}
+.form-note{font-size:.7rem;color:rgba(255,255,255,.45);margin-top:.8rem;}
+.form-items{
+  list-style:none;margin-top:1.5rem;
+  display:flex;flex-direction:column;gap:.6rem;
+}
+.form-items li{
+  font-size:.82rem;color:rgba(255,255,255,.75);
+  display:flex;align-items:center;gap:.6rem;
+}
+.form-items li::before{content:'✓';color:var(--gold2);font-weight:700;}
+
+/* ── ABOUT ── */
+.about-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:5rem;align-items:center;
+}
+.about-logo-showcase{
+  display:flex;flex-direction:column;
+  align-items:center;gap:3rem;
+}
+.logo-on-dark{
+  background:var(--ink);
+  padding:3rem;border-radius:2px;
+  display:flex;align-items:center;justify-content:center;
+  width:100%;
+}
+.logo-on-light{
+  background:var(--cream);
+  padding:2rem 3rem;border-radius:2px;
+  display:flex;align-items:center;justify-content:center;
+  width:100%;
+  border:1px solid rgba(10,122,110,0.15);
+}
+.about-text h2{margin-bottom:1.2rem;}
+.about-text p{font-size:.95rem;line-height:1.8;color:var(--mid);margin-bottom:1.2rem;}
+.about-stack{
+  display:flex;flex-wrap:wrap;gap:.6rem;
+  margin-top:1.5rem;
+}
+.stack-tag{
+  font-family:'Space Mono',monospace;
+  font-size:.6rem;font-weight:400;text-transform:uppercase;letter-spacing:.1em;
+  color:var(--teal);
+  border:1px solid rgba(10,122,110,0.3);
+  padding:.3rem .7rem;border-radius:1px;
+  background:rgba(10,122,110,0.05);
+}
+
+/* ── CONTACT ── */
+.contact-section{
+  background:var(--ink);
+  padding:6rem 5vw;
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:4rem;align-items:start;
+}
+.contact-section h2{color:var(--white);}
+.contact-section h2 em{color:var(--teal2);}
+.contact-section p{color:rgba(255,255,255,.6);font-size:.95rem;line-height:1.75;margin-top:1rem;margin-bottom:2rem;}
+.contact-details{display:flex;flex-direction:column;gap:1.2rem;}
+.contact-item{
+  display:flex;align-items:center;gap:1rem;
+  font-size:.88rem;color:rgba(255,255,255,.7);
+}
+.contact-item .ci-label{
+  font-family:'Space Mono',monospace;
+  font-size:.58rem;text-transform:uppercase;letter-spacing:.12em;
+  color:var(--teal2);margin-bottom:.2rem;
+}
+.contact-item a{color:var(--white);text-decoration:none;transition:color .2s;}
+.contact-item a:hover{color:var(--teal2);}
+.contact-form-box{
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+  padding:2.5rem;
+}
+.contact-form-box h3{
+  font-family:'Playfair Display',serif;
+  font-size:1.2rem;color:var(--white);margin-bottom:1.5rem;
+}
+.cf-field{margin-bottom:1.2rem;}
+.cf-label{
+  display:block;
+  font-size:.65rem;font-weight:600;text-transform:uppercase;letter-spacing:.14em;
+  color:rgba(255,255,255,.5);margin-bottom:.5rem;
+}
+.cf-input,.cf-textarea{
+  width:100%;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.12);
+  color:var(--white);
+  padding:.75rem 1rem;
+  font-family:'DM Sans',sans-serif;font-size:.9rem;
+  border-radius:2px;outline:none;
+  transition:border-color .2s;
+}
+.cf-input::placeholder,.cf-textarea::placeholder{color:rgba(255,255,255,.25);}
+.cf-input:focus,.cf-textarea:focus{border-color:var(--teal2);}
+.cf-textarea{height:120px;resize:vertical;}
+.btn-contact{
+  width:100%;
+  background:var(--teal);color:var(--white);
+  padding:.85rem;border:none;border-radius:2px;
+  font-family:'DM Sans',sans-serif;font-size:.8rem;font-weight:600;
+  text-transform:uppercase;letter-spacing:.14em;
+  cursor:pointer;transition:background .2s;
+}
+.btn-contact:hover{background:var(--teal2);}
+
+/* ── FOOTER ── */
+footer{
+  background:var(--ink);
+  border-top:1px solid rgba(10,122,110,0.3);
+  padding:2.5rem 5vw;
+  display:grid;grid-template-columns:1fr auto;
+  align-items:center;gap:2rem;
+}
+.footer-left{display:flex;align-items:center;gap:2rem;}
+.footer-copy{
+  font-family:'Space Mono',monospace;
+  font-size:.58rem;color:rgba(255,255,255,.25);
+  letter-spacing:.08em;text-transform:uppercase;
+}
+.footer-copy span{color:var(--gold2);}
+.footer-links{display:flex;gap:1.5rem;}
+.footer-links a{
+  font-size:.65rem;font-weight:500;text-transform:uppercase;letter-spacing:.1em;
+  color:rgba(255,255,255,.3);text-decoration:none;transition:color .2s;
+}
+.footer-links a:hover{color:var(--teal2);}
+.footer-email{
+  font-family:'Space Mono',monospace;
+  font-size:.62rem;color:var(--teal2);
+  letter-spacing:.06em;
+}
+
+/* ── ANIMATIONS ── */
+.fade-up{
+  opacity:0;transform:translateY(24px);
+  transition:opacity .6s ease,transform .6s ease;
+}
+.fade-up.visible{opacity:1;transform:translateY(0);}
+
+/* ── MOBILE ── */
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr;padding:100px 5vw 60px;}
+  .hero-visual{display:none;}
+  .how-grid{grid-template-columns:1fr;}
+  .services-grid{grid-template-columns:1fr;}
+  .stats-row{grid-template-columns:repeat(2,1fr);}
+  .cta-section{grid-template-columns:1fr;}
+  .about-grid{grid-template-columns:1fr;}
+  .contact-section{grid-template-columns:1fr;}
+  footer{grid-template-columns:1fr;text-align:center;}
+  .footer-left{flex-direction:column;align-items:center;}
+  .nav-links{display:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════ NAV ══════════════════════ -->
+<nav>
+  <a href="#" class="nav-logo">
+    <!-- Compact inline logo -->
+    <svg width="32" height="32" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="36" cy="36" r="32" stroke="#0A7A6E" stroke-width="3" fill="none"/>
+      <circle cx="36" cy="36" r="19" stroke="#C49A2A" stroke-width="2" fill="none"/>
+      <circle cx="36" cy="4"  r="5.5" fill="#0A7A6E"/>
+      <circle cx="63.7" cy="52" r="5.5" fill="#0EA898"/>
+      <circle cx="8.3"  cy="52" r="5.5" fill="#0EA898"/>
+      <circle cx="36" cy="36" r="5.5" fill="#C49A2A"/>
+      <line x1="36" y1="9.5" x2="36" y2="17" stroke="#0A7A6E" stroke-width="1.5" stroke-dasharray="2.5 2"/>
+      <line x1="60.4" y1="49.5" x2="53.4" y2="45.5" stroke="#0EA898" stroke-width="1.5" stroke-dasharray="2.5 2"/>
+      <line x1="11.6" y1="49.5" x2="18.6" y2="45.5" stroke="#0EA898" stroke-width="1.5" stroke-dasharray="2.5 2"/>
+      <polyline points="32,6.5 36,2.5 40,6.5" stroke="#0A7A6E" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <div class="nav-wordmark">AI <span>Signal Loop</span><sup style="font-size:.5rem;color:var(--gold2);">™</sup></div>
+  </a>
+  <div class="nav-links">
+    <a href="#how">How It Works</a>
+    <a href="#services">Services</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+    <a href="#starter" class="nav-cta">Get Free Prompts</a>
+  </div>
+</nav>
+
+<!-- ══════════════════════ HERO ══════════════════════ -->
+<section class="hero">
+  <div class="hero-bg">
+    <div class="orbit-ring"><div class="orbit-dot"></div></div>
+    <div class="orbit-ring"><div class="orbit-dot"></div></div>
+    <div class="orbit-ring"></div>
+    <div class="orbit-ring"></div>
+  </div>
+
+  <div class="hero-content fade-up">
+    <div class="hero-eyebrow">AI Business Consulting</div>
+    <h1>The Business<br>That Runs<br><em>Itself.</em></h1>
+    <p class="hero-sub">AI Signal Loop builds autonomous business systems that generate content, qualify leads, and grow your revenue — while you sleep. One insight per week. The AI does the rest.</p>
+    <div class="hero-actions">
+      <a href="#starter" class="btn-primary">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1l2 5h5l-4 3 1.5 5L8 11l-4.5 3L5 9 1 6h5z" fill="currentColor"/></svg>
+        Get 10 Free AI Prompts
+      </a>
+      <a href="#services" class="btn-secondary">See What We Build →</a>
+    </div>
+    <div class="hero-proof">Tennessee-based. AI-powered. Built in public.</div>
+  </div>
+
+  <div class="hero-visual fade-up" style="animation-delay:.2s">
+    <div class="hero-logo-display">
+      <div class="logo-glow"></div>
+      <!-- Large hero icon mark -->
+      <svg width="280" height="280" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="36" cy="36" r="32" stroke="#0A7A6E" stroke-width="2.5" fill="none" opacity=".9"/>
+        <circle cx="36" cy="36" r="19" stroke="#C49A2A" stroke-width="2" fill="none" opacity=".8"/>
+        <circle cx="36" cy="4"  r="5.5" fill="#0A7A6E"/>
+        <circle cx="63.7" cy="52" r="5.5" fill="#0EA898"/>
+        <circle cx="8.3"  cy="52" r="5.5" fill="#0EA898"/>
+        <circle cx="36" cy="36" r="5.5" fill="#C49A2A"/>
+        <line x1="36" y1="9.5" x2="36" y2="17" stroke="#0A7A6E" stroke-width="1.5" stroke-dasharray="2.5 2"/>
+        <line x1="60.4" y1="49.5" x2="53.4" y2="45.5" stroke="#0EA898" stroke-width="1.5" stroke-dasharray="2.5 2"/>
+        <line x1="11.6" y1="49.5" x2="18.6" y2="45.5" stroke="#0EA898" stroke-width="1.5" stroke-dasharray="2.5 2"/>
+        <polyline points="32,6.5 36,2.5 40,6.5" stroke="#0A7A6E" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ TICKER ══════════════════════ -->
+<div class="ticker">
+  <div class="ticker-track">
+    <span class="ticker-item"><span class="dot">◆</span>Content Automation</span>
+    <span class="ticker-item"><span class="dot">◆</span>Lead Qualification</span>
+    <span class="ticker-item"><span class="dot">◆</span>Financial OS</span>
+    <span class="ticker-item"><span class="dot">◆</span>Autonomous Agent Systems</span>
+    <span class="ticker-item"><span class="dot">◆</span>AI Prompt Engineering</span>
+    <span class="ticker-item"><span class="dot">◆</span>n8n Workflow Builds</span>
+    <span class="ticker-item"><span class="dot">◆</span>Revenue Automation</span>
+    <span class="ticker-item"><span class="dot">◆</span>Client Onboarding</span>
+    <span class="ticker-item"><span class="dot">◆</span>Tennessee Based</span>
+    <span class="ticker-item"><span class="dot">◆</span>Content Automation</span>
+    <span class="ticker-item"><span class="dot">◆</span>Lead Qualification</span>
+    <span class="ticker-item"><span class="dot">◆</span>Financial OS</span>
+    <span class="ticker-item"><span class="dot">◆</span>Autonomous Agent Systems</span>
+    <span class="ticker-item"><span class="dot">◆</span>AI Prompt Engineering</span>
+    <span class="ticker-item"><span class="dot">◆</span>n8n Workflow Builds</span>
+    <span class="ticker-item"><span class="dot">◆</span>Revenue Automation</span>
+    <span class="ticker-item"><span class="dot">◆</span>Client Onboarding</span>
+    <span class="ticker-item"><span class="dot">◆</span>Tennessee Based</span>
+  </div>
+</div>
+
+<!-- ══════════════════════ HOW IT WORKS ══════════════════════ -->
+<section class="section" id="how">
+  <div class="section-label">Process</div>
+  <h2>How the <em>Loop</em> Works</h2>
+  <p class="section-sub">Three nodes. Two rings. One system that compounds over time. You provide the signal — AI Signal Loop amplifies it into revenue.</p>
+
+  <div class="how-grid">
+    <div class="how-card fade-up">
+      <div class="how-num">01</div>
+      <h3>You Give the Signal</h3>
+      <p>One idea, insight, or opinion per week. That's your entire input. A 2-minute voice note or a paragraph of text is enough to fuel the entire system for seven days.</p>
+      <div class="how-arrow">→</div>
+    </div>
+    <div class="how-card fade-up" style="transition-delay:.1s">
+      <div class="how-num">02</div>
+      <h3>The AI Builds the Content</h3>
+      <p>Autonomous agents transform your signal into a full week of content — LinkedIn posts, Reddit threads, a Substack newsletter, and email sequences — all in your voice.</p>
+      <div class="how-arrow">→</div>
+    </div>
+    <div class="how-card fade-up" style="transition-delay:.2s">
+      <div class="how-num">03</div>
+      <h3>The Loop Generates Revenue</h3>
+      <p>Content drives subscribers. Subscribers become leads. Leads become clients. The financial system automatically allocates every dollar. You review the weekly report. That's it.</p>
+      <div class="how-arrow">→</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ STATS ══════════════════════ -->
+<div class="stats-row">
+  <div class="stat-cell fade-up">
+    <div class="stat-num">$0</div>
+    <div class="stat-label">To Start Building</div>
+  </div>
+  <div class="stat-cell fade-up" style="transition-delay:.1s">
+    <div class="stat-num">2hrs</div>
+    <div class="stat-label">CEO Time Per Week</div>
+  </div>
+  <div class="stat-cell fade-up" style="transition-delay:.2s">
+    <div class="stat-num">24/7</div>
+    <div class="stat-label">Agent Uptime</div>
+  </div>
+  <div class="stat-cell fade-up" style="transition-delay:.3s">
+    <div class="stat-num">$1M+</div>
+    <div class="stat-label">Year 3 Target</div>
+  </div>
+</div>
+
+<!-- ══════════════════════ SERVICES ══════════════════════ -->
+<section class="section services-bg" id="services">
+  <div class="section-label">Services</div>
+  <h2>What We <em>Build</em> For You</h2>
+  <p class="section-sub">Three tiers. Every one builds toward an autonomous business that operates without you in the day-to-day.</p>
+
+  <div class="services-grid">
+    <div class="service-card fade-up">
+      <div class="service-icon">⚡</div>
+      <h3>The Toolkit — Self-Serve</h3>
+      <p>A curated library of AI prompts, workflow templates, and quick-start guides built from Signal Loop's own operating system. Covers content, finance, client management, and growth.</p>
+      <div class="service-price">From $47 · Digital Download</div>
+    </div>
+    <div class="service-card fade-up" style="transition-delay:.1s">
+      <div class="service-icon">🔁</div>
+      <h3>The Cohort — Done With You</h3>
+      <p>Six weeks. Six people maximum. We build your autonomous business system together — live, hands-on, with Signal Loop's full stack as your blueprint. Weekly sessions, async support.</p>
+      <div class="service-price">$1,500 · 6 Weeks · 6 Seats Max</div>
+    </div>
+    <div class="service-card fade-up" style="transition-delay:.2s">
+      <div class="service-icon">🛠</div>
+      <h3>Full Build — Done For You</h3>
+      <p>We design, build, and deploy your complete AI business operating system. Content pipeline, financial OS, lead qualification, client onboarding — fully operational and handed over.</p>
+      <div class="service-price">From $5,000 · Custom Engagement</div>
+    </div>
+    <div class="service-card fade-up" style="transition-delay:.3s">
+      <div class="service-icon">📡</div>
+      <h3>The Newsletter — Signal Loop Weekly</h3>
+      <p>Every week: one actionable AI system, one documented result from our own business, and one tool worth your time. Built in public. No fluff. Free to subscribe.</p>
+      <div class="service-price">Free · Weekly · Substack</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ FREE STARTER / EMAIL CAPTURE ══════════════════════ -->
+<section class="cta-section" id="starter">
+  <div class="fade-up">
+    <h2>Get 10 Free AI Prompts That <em>Run Our Business</em></h2>
+    <p>The exact prompts Signal Loop uses every day — for content creation, financial monitoring, lead qualification, and client onboarding. Yours free, instantly delivered.</p>
+    <ul class="form-items">
+      <li>3 LinkedIn post generators that get real engagement</li>
+      <li>2 financial monitoring prompts connected to your bank</li>
+      <li>2 lead qualification prompts for inbound DMs</li>
+      <li>3 content repurposing prompts (1 idea → 5 pieces)</li>
+    </ul>
+  </div>
+  <div class="cta-form fade-up" style="transition-delay:.15s">
+    <h3>Get the Free Prompt Pack</h3>
+    <p class="form-sub">Delivered instantly to your inbox. No spam — just the prompts and occasional Signal Loop updates.</p>
+    <form id="signup-form" onsubmit="handleSignup(event)">
+      <div class="form-row">
+        <input type="email" class="form-input" id="email-input" placeholder="your@email.com" required>
+        <button type="submit" class="btn-form">Send It →</button>
+      </div>
+      <p class="form-note" id="form-msg">Free. Unsubscribe anytime. We hate spam as much as you do.</p>
+    </form>
+  </div>
+</section>
+
+<!-- ══════════════════════ ABOUT ══════════════════════ -->
+<section class="section" id="about">
+  <div class="about-grid">
+    <div class="about-logo-showcase fade-up">
+      <!-- Dark background logo -->
+      <div class="logo-on-dark">
+        <svg width="260" height="68" viewBox="0 0 300 78" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="38" cy="38" r="32" stroke="#0EA898" stroke-width="3" fill="none"/>
+          <circle cx="38" cy="38" r="19" stroke="#E8C15A" stroke-width="2" fill="none"/>
+          <circle cx="38" cy="6" r="5.5" fill="#0EA898"/>
+          <circle cx="65.7" cy="54" r="5.5" fill="#0EA898"/>
+          <circle cx="10.3" cy="54" r="5.5" fill="#0EA898"/>
+          <circle cx="38" cy="38" r="5.5" fill="#E8C15A"/>
+          <line x1="38" y1="11.5" x2="38" y2="19" stroke="#0EA898" stroke-width="1.5" stroke-dasharray="2.5 2"/>
+          <line x1="62.4" y1="51.5" x2="55.4" y2="47.5" stroke="#0EA898" stroke-width="1.5" stroke-dasharray="2.5 2"/>
+          <line x1="13.6" y1="51.5" x2="20.6" y2="47.5" stroke="#0EA898" stroke-width="1.5" stroke-dasharray="2.5 2"/>
+          <polyline points="34,8 38,3.5 42,8" stroke="#0EA898" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <text x="90" y="33" font-family="Georgia,serif" font-weight="700" font-size="26" fill="#FFFFFF" letter-spacing="1">SIGNAL</text>
+          <text x="90" y="59" font-family="Georgia,serif" font-weight="400" font-size="26" fill="#0EA898" letter-spacing="0.5" font-style="italic">Loop</text>
+          <text x="224" y="22" font-family="Georgia,serif" font-size="13" fill="#E8C15A" font-weight="700">™</text>
+          <line x1="90" y1="66" x2="248" y2="66" stroke="#E8C15A" stroke-width="1" opacity="0.4"/>
+          <text x="90" y="76" font-family="Arial,sans-serif" font-size="8.5" fill="rgba(255,255,255,0.35)" letter-spacing="2.8">AI BUSINESS CONSULTING</text>
+        </svg>
+      </div>
+      <!-- Light background logo -->
+      <div class="logo-on-light">
+        <svg width="260" height="68" viewBox="0 0 300 78" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="38" cy="38" r="32" stroke="#0A7A6E" stroke-width="3" fill="none"/>
+          <circle cx="38" cy="38" r="19" stroke="#C49A2A" stroke-width="2" fill="none"/>
+          <circle cx="38" cy="6" r="5.5" fill="#0A7A6E"/>
+          <circle cx="65.7" cy="54" r="5.5" fill="#0EA898"/>
+          <circle cx="10.3" cy="54" r="5.5" fill="#0EA898"/>
+          <circle cx="38" cy="38" r="5.5" fill="#C49A2A"/>
+          <line x1="38" y1="11.5" x2="38" y2="19" stroke="#0A7A6E" stroke-width="1.5" stroke-dasharray="2.5 2"/>
+          <line x1="62.4" y1="51.5" x2="55.4" y2="47.5" stroke="#0EA898" stroke-width="1.5" stroke-dasharray="2.5 2"/>
+          <line x1="13.6" y1="51.5" x2="20.6" y2="47.5" stroke="#0EA898" stroke-width="1.5" stroke-dasharray="2.5 2"/>
+          <polyline points="34,8 38,3.5 42,8" stroke="#0A7A6E" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <text x="90" y="33" font-family="Georgia,serif" font-weight="700" font-size="26" fill="#0D1B2A" letter-spacing="1">SIGNAL</text>
+          <text x="90" y="59" font-family="Georgia,serif" font-weight="400" font-size="26" fill="#0A7A6E" letter-spacing="0.5" font-style="italic">Loop</text>
+          <text x="224" y="22" font-family="Georgia,serif" font-size="13" fill="#C49A2A" font-weight="700">™</text>
+          <line x1="90" y1="66" x2="248" y2="66" stroke="#C49A2A" stroke-width="1" opacity="0.45"/>
+          <text x="90" y="76" font-family="Arial,sans-serif" font-size="8.5" fill="#8A9AAA" letter-spacing="2.8">AI BUSINESS CONSULTING</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="about-text fade-up" style="transition-delay:.15s">
+      <div class="section-label">About</div>
+      <h2>Built in <em>Public.</em> From Tennessee.</h2>
+      <p>AI Signal Loop is a consulting business being built in real-time and documented publicly. The same AI systems we sell to clients run our own business — content, finances, client management, and growth.</p>
+      <p>Every prompt pack, workflow template, and consulting engagement we offer is something we use ourselves first. No theory. Only systems that have been tested on Signal Loop's own revenue.</p>
+      <p>Built on a free Oracle Cloud server. Powered by Claude AI. Zero upfront cost. One hundred percent transparent.</p>
+      <div class="about-stack">
+        <span class="stack-tag">Claude API</span>
+        <span class="stack-tag">n8n Workflows</span>
+        <span class="stack-tag">Oracle Cloud Free</span>
+        <span class="stack-tag">Cloudflare</span>
+        <span class="stack-tag">Tennessee LLC</span>
+        <span class="stack-tag">OpenClaw</span>
+        <span class="stack-tag">Mercury Bank</span>
+        <span class="stack-tag">Substack</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════ CONTACT ══════════════════════ -->
+<section class="contact-section" id="contact">
+  <div class="fade-up">
+    <h2>Let's Build Your <em>Loop</em></h2>
+    <p>Ready to start? Have a question? Want to join the next cohort? Reach out — we respond within 24 hours. Usually much faster.</p>
+    <div class="contact-details">
+      <div class="contact-item">
+        <div>
+          <div class="ci-label">Email</div>
+          <a href="mailto:ceo@aisignalloop.com">ceo@aisignalloop.com</a>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div>
+          <div class="ci-label">Location</div>
+          <span>Tennessee, United States</span>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div>
+          <div class="ci-label">Newsletter</div>
+          <a href="https://substack.com/@aisignalloop" target="_blank">Signal Loop Weekly on Substack</a>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div>
+          <div class="ci-label">Response Time</div>
+          <span>Within 24 hours, weekdays</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="contact-form-box fade-up" style="transition-delay:.15s">
+    <h3>Send a Message</h3>
+    <form id="contact-form" onsubmit="handleContact(event)">
+      <div class="cf-field">
+        <label class="cf-label">Your Name</label>
+        <input type="text" class="cf-input" placeholder="Jane Smith" required>
+      </div>
+      <div class="cf-field">
+        <label class="cf-label">Email Address</label>
+        <input type="email" class="cf-input" placeholder="jane@company.com" required>
+      </div>
+      <div class="cf-field">
+        <label class="cf-label">What are you looking to build?</label>
+        <textarea class="cf-textarea" placeholder="Tell us about your business and what you want to automate..."></textarea>
+      </div>
+      <button type="submit" class="btn-contact">Send Message →</button>
+      <p id="contact-msg" style="margin-top:.8rem;font-size:.7rem;color:rgba(255,255,255,.4);"></p>
+    </form>
+  </div>
+</section>
+
+<!-- ══════════════════════ FOOTER ══════════════════════ -->
+<footer>
+  <div class="footer-left">
+    <div class="footer-copy">
+      © 2025 <span>AI Signal Loop™</span> · Tennessee · All rights reserved
+    </div>
+    <div class="footer-links">
+      <a href="#how">How It Works</a>
+      <a href="#services">Services</a>
+      <a href="#starter">Free Prompts</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+  <div class="footer-email">ceo@aisignalloop.com</div>
+</footer>
+
+<script>
+// ── Intersection observer for fade-up animations ──
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(el => {
+    if (el.isIntersecting) {
+      el.target.classList.add('visible');
+      observer.unobserve(el.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+// Fire hero immediately
+document.querySelectorAll('.hero .fade-up').forEach(el => {
+  setTimeout(() => el.classList.add('visible'), 100);
+});
+
+// ── Email signup form ──
+function handleSignup(e) {
+  e.preventDefault();
+  const email = document.getElementById('email-input').value;
+  const msg = document.getElementById('form-msg');
+  if (!email) return;
+  // Replace this URL with your actual Beehiiv or ConvertKit form endpoint
+  msg.textContent = '✓ You\'re in! Check your inbox for the free prompt pack.';
+  msg.style.color = '#E8C15A';
+  document.getElementById('email-input').value = '';
+  // TODO: POST to https://api.beehiiv.com/v2/publications/YOUR_PUB_ID/subscriptions
+  // with { email: email }
+}
+
+// ── Contact form ──
+function handleContact(e) {
+  e.preventDefault();
+  const msg = document.getElementById('contact-msg');
+  msg.textContent = '✓ Message received. We\'ll be in touch within 24 hours.';
+  msg.style.color = '#0EA898';
+  e.target.reset();
+  // TODO: Connect to Formspree, Netlify Forms, or email via n8n webhook
+  // POST to https://formspree.io/f/YOUR_FORM_ID
+}
+
+// ── Smooth nav highlight ──
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 100) current = s.id;
+  });
+  navLinks.forEach(a => {
+    a.style.color = a.getAttribute('href') === '#'+current
+      ? 'var(--teal2)' : 'rgba(255,255,255,.6)';
+  });
+});
+</script>
+</body>
+</html>

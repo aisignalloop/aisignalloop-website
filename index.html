@@ -53,21 +53,37 @@ nav{
   background-size:80px 80px;}
 /* — glow blobs — */
 .hero-glow{position:absolute;inset:0;pointer-events:none;
-  background:radial-gradient(ellipse 55% 70% at 65% 50%,rgba(10,122,110,.1) 0%,transparent 65%),
-             radial-gradient(ellipse 35% 45% at 5% 85%,rgba(196,154,42,.07) 0%,transparent 55%);}
+  background:radial-gradient(ellipse 55% 70% at 65% 50%,rgba(10,122,110,.18) 0%,transparent 60%),
+             radial-gradient(ellipse 35% 45% at 5% 85%,rgba(196,154,42,.1) 0%,transparent 55%),
+             radial-gradient(ellipse 25% 30% at 62% 50%,rgba(14,168,152,.08) 0%,transparent 50%);}
 /* — orbital rings (kept from original) — */
 .orbit-ring{
   position:absolute;border-radius:50%;top:50%;left:62%;transform:translate(-50%,-50%);
   animation:spin linear infinite;pointer-events:none;
 }
-.orbit-ring:nth-child(1){width:400px;height:400px;border:1px solid rgba(10,122,110,.14);animation-duration:40s;}
-.orbit-ring:nth-child(2){width:640px;height:640px;border:1px solid rgba(196,154,42,.08);animation-duration:65s;animation-direction:reverse;}
-.orbit-ring:nth-child(3){width:880px;height:880px;border:1px solid rgba(10,122,110,.05);animation-duration:92s;}
-.orbit-ring:nth-child(4){width:1120px;height:1120px;border:1px solid rgba(196,154,42,.04);animation-duration:125s;animation-direction:reverse;}
+.orbit-ring:nth-child(1){width:380px;height:380px;border:1px solid rgba(10,122,110,.28);animation-duration:38s;}
+.orbit-ring:nth-child(2){width:620px;height:620px;border:1px solid rgba(196,154,42,.15);animation-duration:62s;animation-direction:reverse;}
+.orbit-ring:nth-child(3){width:860px;height:860px;border:1px solid rgba(10,122,110,.1);animation-duration:90s;}
+.orbit-ring:nth-child(4){width:1100px;height:1100px;border:1px solid rgba(196,154,42,.07);animation-duration:120s;animation-direction:reverse;}
 .orbit-dot{position:absolute;width:8px;height:8px;border-radius:50%;top:0;left:50%;transform:translate(-50%,-50%);}
-.orbit-ring:nth-child(1) .orbit-dot{background:var(--teal2);box-shadow:0 0 14px var(--teal2);}
-.orbit-ring:nth-child(2) .orbit-dot{background:var(--gold);box-shadow:0 0 10px var(--gold);top:auto;bottom:0;}
+.orbit-ring:nth-child(1) .orbit-dot{background:var(--teal2);box-shadow:0 0 18px 4px var(--teal2);width:10px;height:10px;}
+.orbit-ring:nth-child(2) .orbit-dot{background:var(--gold);box-shadow:0 0 14px 3px var(--gold);top:auto;bottom:0;width:9px;height:9px;}
+/* extra trailing dots */
+.orbit-ring:nth-child(1)::after,.orbit-ring:nth-child(2)::after{
+  content:'';position:absolute;width:5px;height:5px;border-radius:50%;
+  top:50%;right:0;transform:translate(50%,-50%);
+}
+.orbit-ring:nth-child(1)::after{background:rgba(14,168,152,.5);box-shadow:0 0 8px rgba(14,168,152,.6);}
+.orbit-ring:nth-child(2)::after{background:rgba(196,154,42,.4);box-shadow:0 0 8px rgba(196,154,42,.5);}
 @keyframes spin{to{transform:translate(-50%,-50%) rotate(360deg);}}
+/* hero canvas sits behind everything */
+#hero-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:.75;}
+/* scan sweep overlay */
+#hero-scan{position:absolute;inset:0;pointer-events:none;z-index:1;overflow:hidden;}
+#hero-scan::after{content:'';position:absolute;left:0;right:0;height:120px;
+  background:linear-gradient(to bottom,transparent,rgba(10,168,152,.04),transparent);
+  animation:scan 6s ease-in-out infinite;top:-120px;}
+@keyframes scan{0%{top:-120px;}100%{top:calc(100% + 120px);}}
 
 /* hero content */
 .hero-content{position:relative;z-index:1;}
@@ -360,9 +376,33 @@ h2.inv em{color:var(--teal2);}
 
 /* ══ ABOUT (kept, slightly refined) ══ */
 .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;}
-.about-logo-showcase{display:flex;flex-direction:column;align-items:center;gap:3px;}
-.logo-on-dark{background:var(--ink);padding:3rem;display:flex;align-items:center;justify-content:center;width:100%;}
-.logo-on-light{background:var(--cream);padding:2.2rem 3rem;display:flex;align-items:center;justify-content:center;width:100%;border:1px solid var(--rule);}
+.about-logo-showcase{display:flex;flex-direction:column;align-items:stretch;}
+.logo-animated-panel{
+  background:var(--ink);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  width:100%;aspect-ratio:1/1;position:relative;overflow:hidden;
+  border:1px solid rgba(10,122,110,.18);
+}
+.logo-animated-panel::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 80% 80% at 50% 50%, rgba(10,122,110,.12) 0%, transparent 70%);
+  pointer-events:none;
+}
+#logo-canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;}
+.logo-wordmark{
+  position:relative;z-index:2;
+  display:flex;flex-direction:column;align-items:center;
+  margin-top:1.4rem;
+  pointer-events:none;
+  /* pushed to bottom third of panel */
+  position:absolute;bottom:12%;left:0;right:0;
+  display:flex;flex-direction:column;align-items:center;gap:2px;
+}
+.lw-signal{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:#fff;letter-spacing:.08em;}
+.lw-loop{font-family:'Playfair Display',serif;font-size:1.6rem;font-style:italic;color:#0EA898;letter-spacing:.04em;line-height:1;}
+.lw-tm{font-family:Georgia,serif;font-size:.7rem;color:#E8C15A;vertical-align:super;margin-left:2px;}
+.lw-rule{width:140px;height:1px;background:rgba(232,193,90,.3);margin:.5rem 0 .3rem;}
+.lw-sub{font-family:'Space Mono',monospace;font-size:.48rem;letter-spacing:.22em;color:rgba(255,255,255,.3);text-transform:uppercase;}
 .about-text h2{margin-bottom:1.1rem;}
 .about-text p{font-size:.93rem;line-height:1.82;color:var(--mid);margin-bottom:1rem;}
 .about-stack{display:flex;flex-wrap:wrap;gap:.55rem;margin-top:1.5rem;}
@@ -515,6 +555,8 @@ footer{
 
 <!-- ════════════════ HERO ════════════════ -->
 <section class="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div id="hero-scan"></div>
   <div class="hero-grid"></div>
   <div class="hero-glow"></div>
   <div class="orbit-ring"><div class="orbit-dot"></div></div>
@@ -951,43 +993,16 @@ footer{
 <section class="section" id="about">
   <div class="about-grid">
     <div class="about-logo-showcase fade-up">
-      <div class="logo-on-dark">
-        <svg width="260" height="68" viewBox="0 0 300 78" fill="none">
-          <circle cx="38" cy="38" r="32" stroke="#0EA898" stroke-width="3" fill="none"/>
-          <circle cx="38" cy="38" r="19" stroke="#E8C15A" stroke-width="2" fill="none"/>
-          <circle cx="38" cy="6" r="5.5" fill="#0EA898"/>
-          <circle cx="65.7" cy="54" r="5.5" fill="#0EA898"/>
-          <circle cx="10.3" cy="54" r="5.5" fill="#0EA898"/>
-          <circle cx="38" cy="38" r="5.5" fill="#E8C15A"/>
-          <line x1="38" y1="11.5" x2="38" y2="19" stroke="#0EA898" stroke-width="1.5" stroke-dasharray="2.5 2"/>
-          <line x1="62.4" y1="51.5" x2="55.4" y2="47.5" stroke="#0EA898" stroke-width="1.5" stroke-dasharray="2.5 2"/>
-          <line x1="13.6" y1="51.5" x2="20.6" y2="47.5" stroke="#0EA898" stroke-width="1.5" stroke-dasharray="2.5 2"/>
-          <polyline points="34,8 38,3.5 42,8" stroke="#0EA898" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-          <text x="90" y="33" font-family="Georgia,serif" font-weight="700" font-size="26" fill="#FFFFFF" letter-spacing="1">SIGNAL</text>
-          <text x="90" y="59" font-family="Georgia,serif" font-weight="400" font-size="26" fill="#0EA898" letter-spacing="0.5" font-style="italic">Loop</text>
-          <text x="224" y="22" font-family="Georgia,serif" font-size="13" fill="#E8C15A" font-weight="700">™</text>
-          <line x1="90" y1="66" x2="248" y2="66" stroke="#E8C15A" stroke-width="1" opacity="0.4"/>
-          <text x="90" y="76" font-family="Arial,sans-serif" font-size="8.5" fill="rgba(255,255,255,0.3)" letter-spacing="2.8">AI INTELLIGENCE · AUTOMATED</text>
-        </svg>
-      </div>
-      <div class="logo-on-light">
-        <svg width="260" height="68" viewBox="0 0 300 78" fill="none">
-          <circle cx="38" cy="38" r="32" stroke="#0A7A6E" stroke-width="3" fill="none"/>
-          <circle cx="38" cy="38" r="19" stroke="#C49A2A" stroke-width="2" fill="none"/>
-          <circle cx="38" cy="6" r="5.5" fill="#0A7A6E"/>
-          <circle cx="65.7" cy="54" r="5.5" fill="#0EA898"/>
-          <circle cx="10.3" cy="54" r="5.5" fill="#0EA898"/>
-          <circle cx="38" cy="38" r="5.5" fill="#C49A2A"/>
-          <line x1="38" y1="11.5" x2="38" y2="19" stroke="#0A7A6E" stroke-width="1.5" stroke-dasharray="2.5 2"/>
-          <line x1="62.4" y1="51.5" x2="55.4" y2="47.5" stroke="#0EA898" stroke-width="1.5" stroke-dasharray="2.5 2"/>
-          <line x1="13.6" y1="51.5" x2="20.6" y2="47.5" stroke="#0EA898" stroke-width="1.5" stroke-dasharray="2.5 2"/>
-          <polyline points="34,8 38,3.5 42,8" stroke="#0A7A6E" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-          <text x="90" y="33" font-family="Georgia,serif" font-weight="700" font-size="26" fill="#0D1B2A" letter-spacing="1">SIGNAL</text>
-          <text x="90" y="59" font-family="Georgia,serif" font-weight="400" font-size="26" fill="#0A7A6E" letter-spacing="0.5" font-style="italic">Loop</text>
-          <text x="224" y="22" font-family="Georgia,serif" font-size="13" fill="#C49A2A" font-weight="700">™</text>
-          <line x1="90" y1="66" x2="248" y2="66" stroke="#C49A2A" stroke-width="1" opacity="0.45"/>
-          <text x="90" y="76" font-family="Arial,sans-serif" font-size="8.5" fill="#8A9AAA" letter-spacing="2.8">AI INTELLIGENCE · AUTOMATED</text>
-        </svg>
+      <div class="logo-animated-panel">
+        <canvas id="logo-canvas"></canvas>
+        <div class="logo-wordmark">
+          <div style="display:flex;align-items:baseline;gap:0">
+            <span class="lw-signal">SIGNAL</span><span class="lw-tm">™</span>
+          </div>
+          <div class="lw-loop">Loop</div>
+          <div class="lw-rule"></div>
+          <div class="lw-sub">AI Intelligence · Automated</div>
+        </div>
       </div>
     </div>
 
@@ -1222,6 +1237,311 @@ function processPayment() {
     document.getElementById('sm-success').style.display = 'block';
   }, 1800);
 }
+
+// ══════════════════════════════════════════════════
+// HERO CANVAS — animated signal network
+// ══════════════════════════════════════════════════
+(function() {
+  const canvas = document.getElementById('hero-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+
+  const TEAL = { r:14,  g:168, b:152 };
+  const GOLD = { r:196, g:154, b:42  };
+  const NODES = 70;
+  const MAX_DIST = 180;
+  let W, H, nodes = [], pulses = [], raf, frame = 0;
+
+  function resize() {
+    const hero = canvas.parentElement;
+    W = canvas.width  = hero.offsetWidth;
+    H = canvas.height = hero.offsetHeight;
+  }
+
+  function randNode() {
+    const isTeal = Math.random() > 0.3;
+    const c = isTeal ? TEAL : GOLD;
+    return {
+      x: Math.random() * W,
+      y: Math.random() * H,
+      vx: (Math.random() - 0.5) * 0.28,
+      vy: (Math.random() - 0.5) * 0.28,
+      r: Math.random() * 2 + 0.7,
+      c,
+      pulse: Math.random() * Math.PI * 2,
+      pulseSpeed: 0.01 + Math.random() * 0.016,
+    };
+  }
+
+  // Data pulses — small bright dots that travel along connection lines
+  function spawnPulse(a, b) {
+    const isTeal = Math.random() > 0.4;
+    pulses.push({ ax: a.x, ay: a.y, bx: b.x, by: b.y, t: 0, speed: 0.008 + Math.random() * 0.012, c: isTeal ? TEAL : GOLD });
+  }
+
+  function init() {
+    nodes = Array.from({ length: NODES }, randNode);
+    pulses = [];
+  }
+
+  function draw() {
+    frame++;
+    ctx.clearRect(0, 0, W, H);
+
+    // Move nodes
+    nodes.forEach(n => {
+      n.x += n.vx; n.y += n.vy;
+      n.pulse += n.pulseSpeed;
+      if (n.x < -30) n.x = W + 30;
+      if (n.x > W+30) n.x = -30;
+      if (n.y < -30) n.y = H + 30;
+      if (n.y > H+30) n.y = -30;
+    });
+
+    // Find active connections
+    const connections = [];
+    for (let i = 0; i < nodes.length; i++) {
+      for (let j = i + 1; j < nodes.length; j++) {
+        const a = nodes[i], b = nodes[j];
+        const dx = a.x - b.x, dy = a.y - b.y;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        if (dist < MAX_DIST) connections.push({ a, b, dist });
+      }
+    }
+
+    // Draw connection lines
+    connections.forEach(({ a, b, dist }) => {
+      const alpha = (1 - dist / MAX_DIST) * 0.18;
+      const rc = Math.round((a.c.r + b.c.r) / 2);
+      const gc = Math.round((a.c.g + b.c.g) / 2);
+      const bc = Math.round((a.c.b + b.c.b) / 2);
+      ctx.beginPath();
+      ctx.moveTo(a.x, a.y);
+      ctx.lineTo(b.x, b.y);
+      ctx.strokeStyle = `rgba(${rc},${gc},${bc},${alpha})`;
+      ctx.lineWidth = 0.7;
+      ctx.stroke();
+    });
+
+    // Randomly spawn data pulses along connections
+    if (frame % 28 === 0 && connections.length > 0) {
+      const conn = connections[Math.floor(Math.random() * connections.length)];
+      if (pulses.length < 18) spawnPulse(conn.a, conn.b);
+    }
+
+    // Animate data pulses
+    pulses = pulses.filter(p => p.t <= 1);
+    pulses.forEach(p => {
+      p.t += p.speed;
+      const x = p.ax + (p.bx - p.ax) * p.t;
+      const y = p.ay + (p.by - p.ay) * p.t;
+      const { r, g, b } = p.c;
+
+      // Trailing glow
+      const trail = ctx.createRadialGradient(x, y, 0, x, y, 9);
+      trail.addColorStop(0, `rgba(${r},${g},${b},0.55)`);
+      trail.addColorStop(0.4, `rgba(${r},${g},${b},0.18)`);
+      trail.addColorStop(1, `rgba(${r},${g},${b},0)`);
+      ctx.beginPath();
+      ctx.arc(x, y, 9, 0, Math.PI * 2);
+      ctx.fillStyle = trail;
+      ctx.fill();
+
+      // Bright core
+      ctx.beginPath();
+      ctx.arc(x, y, 2.2, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${r},${g},${b},0.95)`;
+      ctx.fill();
+    });
+
+    // Draw nodes
+    nodes.forEach(n => {
+      const glowA = 0.1 + 0.07 * Math.sin(n.pulse);
+      const coreA = 0.6 + 0.35 * Math.sin(n.pulse);
+      const { r, g, b } = n.c;
+
+      // Glow halo
+      const grad = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.r * 10);
+      grad.addColorStop(0, `rgba(${r},${g},${b},${glowA})`);
+      grad.addColorStop(1, `rgba(${r},${g},${b},0)`);
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, n.r * 10, 0, Math.PI * 2);
+      ctx.fillStyle = grad;
+      ctx.fill();
+
+      // Core dot
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${r},${g},${b},${coreA})`;
+      ctx.fill();
+    });
+
+    raf = requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', () => { resize(); init(); });
+  resize();
+  init();
+  draw();
+})();
+
+// ══════════════════════════════════════════════════
+// LOGO CANVAS — animated orbital mark
+// ══════════════════════════════════════════════════
+(function() {
+  const canvas = document.getElementById('logo-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let W, H, cx, cy, angle = 0, angle2 = 0, angle3 = 0, raf2;
+  const TEAL  = '#0EA898';
+  const TEAL2 = '#0A7A6E';
+  const GOLD  = '#E8C15A';
+  const GOLD2 = '#C49A2A';
+
+  function resize2() {
+    const panel = canvas.parentElement;
+    W = canvas.width  = panel.offsetWidth;
+    H = canvas.height = panel.offsetHeight;
+    cx = W / 2;
+    cy = H * 0.42; // sit in upper portion, wordmark takes lower
+  }
+
+  function drawLogo() {
+    ctx.clearRect(0, 0, W, H);
+
+    const base = Math.min(W, H) * 0.28; // scale relative to panel
+
+    // ── Ambient glow behind everything ──
+    const glow = ctx.createRadialGradient(cx, cy, 0, cx, cy, base * 1.8);
+    glow.addColorStop(0, 'rgba(14,168,152,0.10)');
+    glow.addColorStop(0.5,'rgba(10,122,110,0.05)');
+    glow.addColorStop(1,  'rgba(10,122,110,0)');
+    ctx.beginPath();
+    ctx.arc(cx, cy, base * 1.8, 0, Math.PI*2);
+    ctx.fillStyle = glow;
+    ctx.fill();
+
+    // ── Outer ring (slow clockwise) ──
+    ctx.beginPath();
+    ctx.arc(cx, cy, base, 0, Math.PI*2);
+    ctx.strokeStyle = 'rgba(14,168,152,0.5)';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // Three outer orbital nodes (rotate together)
+    const outerPositions = [0, (2*Math.PI/3), (4*Math.PI/3)];
+    outerPositions.forEach((baseAngle, i) => {
+      const a = baseAngle + angle;
+      const nx = cx + Math.cos(a) * base;
+      const ny = cy + Math.sin(a) * base;
+
+      // Dashed spoke
+      ctx.save();
+      ctx.setLineDash([4, 3]);
+      ctx.beginPath();
+      ctx.moveTo(cx + Math.cos(a) * base * 0.52, cy + Math.sin(a) * base * 0.52);
+      ctx.lineTo(nx, ny);
+      ctx.strokeStyle = 'rgba(14,168,152,0.45)';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.restore();
+
+      // Node glow
+      const ng = ctx.createRadialGradient(nx, ny, 0, nx, ny, base * 0.18);
+      ng.addColorStop(0, 'rgba(14,168,152,0.4)');
+      ng.addColorStop(1, 'rgba(14,168,152,0)');
+      ctx.beginPath();
+      ctx.arc(nx, ny, base * 0.18, 0, Math.PI*2);
+      ctx.fillStyle = ng;
+      ctx.fill();
+
+      // Node core
+      ctx.beginPath();
+      ctx.arc(nx, ny, base * 0.072, 0, Math.PI*2);
+      ctx.fillStyle = TEAL;
+      ctx.fill();
+
+      // Top node gets an arrow chevron
+      if (i === 0) {
+        const sz = base * 0.055;
+        ctx.save();
+        ctx.translate(nx, ny - base * 0.085);
+        ctx.rotate(a - Math.PI/2);
+        ctx.beginPath();
+        ctx.moveTo(-sz, sz*0.6);
+        ctx.lineTo(0, -sz*0.6);
+        ctx.lineTo(sz, sz*0.6);
+        ctx.strokeStyle = TEAL;
+        ctx.lineWidth = 1.8;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        ctx.stroke();
+        ctx.restore();
+      }
+    });
+
+    // ── Inner ring (counter-clockwise, gold) ──
+    ctx.beginPath();
+    ctx.arc(cx, cy, base * 0.58, 0, Math.PI*2);
+    ctx.strokeStyle = 'rgba(196,154,42,0.5)';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    // Single gold orbiting dot on inner ring
+    const gx = cx + Math.cos(angle2) * base * 0.58;
+    const gy = cy + Math.sin(angle2) * base * 0.58;
+    const gg = ctx.createRadialGradient(gx, gy, 0, gx, gy, base * 0.15);
+    gg.addColorStop(0, 'rgba(232,193,90,0.5)');
+    gg.addColorStop(1, 'rgba(232,193,90,0)');
+    ctx.beginPath();
+    ctx.arc(gx, gy, base * 0.15, 0, Math.PI*2);
+    ctx.fillStyle = gg;
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(gx, gy, base * 0.065, 0, Math.PI*2);
+    ctx.fillStyle = GOLD;
+    ctx.fill();
+
+    // ── Center gold dot (pulses) ──
+    const pulse = 0.85 + 0.15 * Math.sin(angle3 * 3);
+    const cg = ctx.createRadialGradient(cx, cy, 0, cx, cy, base * 0.22 * pulse);
+    cg.addColorStop(0, 'rgba(196,154,42,0.35)');
+    cg.addColorStop(1, 'rgba(196,154,42,0)');
+    ctx.beginPath();
+    ctx.arc(cx, cy, base * 0.22 * pulse, 0, Math.PI*2);
+    ctx.fillStyle = cg;
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.arc(cx, cy, base * 0.085, 0, Math.PI*2);
+    ctx.fillStyle = GOLD2;
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.arc(cx, cy, base * 0.042, 0, Math.PI*2);
+    ctx.fillStyle = GOLD;
+    ctx.fill();
+
+    // Advance angles
+    angle  += 0.006;   // outer ring: slow CW
+    angle2 -= 0.014;   // inner gold dot: faster CCW
+    angle3 += 0.022;   // pulse timer
+
+    raf2 = requestAnimationFrame(drawLogo);
+  }
+
+  // Start when panel is visible
+  const logoObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { resize2(); drawLogo(); }
+      else { cancelAnimationFrame(raf2); }
+    });
+  }, { threshold: 0.1 });
+  logoObs.observe(canvas.parentElement);
+
+  window.addEventListener('resize', () => { resize2(); });
+})();
 
 </script>
 </body>

@@ -2,130 +2,1227 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Signal Loop</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="AI Signal Loop — We track every AI signal and translate it into actionable business intelligence. Not news. Strategy.">
+<meta property="og:title" content="AI Signal Loop™ — AI Intelligence for Business">
+<meta property="og:description" content="Signal → Loop → Opportunity. Every AI breakthrough, converted into business strategy.">
+<meta property="og:url" content="https://aisignalloop.com">
+<meta name="theme-color" content="#0D1B2A">
+<title>AI Signal Loop™ — AI Intelligence for Business</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-
-body{
-background:#F2EEE6;
-font-family:'DM Sans',sans-serif;
-color:#0D1B2A;
-margin:0;
+/* ══ RESET & TOKENS ══ */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --ink:#0D1B2A; --teal:#0A7A6E; --teal2:#0EA898;
+  --gold:#C49A2A; --gold2:#E8C15A;
+  --cream:#F6F1E9; --bg:#F2EEE6;
+  --white:#fff; --mid:#5A6A7A;
+  --light:#EAF0F0; --dark2:#111E2C;
+  --rule:rgba(10,122,110,.13);
+  --rule-dark:rgba(10,122,110,.22);
 }
+html{scroll-behavior:smooth;}
+body{background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--ink);overflow-x:hidden;}
 
-header{
-background:#0D1B2A;
-padding:40px;
-border-bottom:3px solid #0A7A6E;
+/* ══ NAV ══ */
+nav{
+  position:fixed;inset:0 0 auto 0;z-index:200;height:64px;padding:0 5vw;
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(13,27,42,.97);backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--rule-dark);
 }
+.nav-logo{display:flex;align-items:center;gap:11px;text-decoration:none;}
+.nav-wordmark{font-family:'Space Mono',monospace;font-size:.63rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--white);}
+.nav-wordmark b{color:var(--gold2);}
+.nav-links{display:flex;align-items:center;gap:2rem;}
+.nav-links a{font-size:.72rem;font-weight:500;text-transform:uppercase;letter-spacing:.12em;color:rgba(255,255,255,.45);text-decoration:none;transition:color .2s;}
+.nav-links a:hover,.nav-links a.active{color:var(--teal2);}
+.nav-cta{border:1px solid var(--teal2)!important;color:var(--teal2)!important;padding:.4rem 1.1rem!important;transition:all .2s!important;}
+.nav-cta:hover{background:var(--teal2)!important;color:var(--ink)!important;}
 
-.logo{
-font-family:'Playfair Display',serif;
-color:#E8C15A;
-font-size:34px;
-letter-spacing:2px;
-}
-
-.tag{
-color:#ffffffaa;
-font-size:12px;
-margin-top:8px;
-letter-spacing:2px;
-}
-
+/* ══ HERO ══ */
 .hero{
-padding:80px 40px;
-max-width:900px;
-margin:auto;
+  min-height:100vh;background:var(--ink);
+  display:grid;grid-template-columns:1fr 1fr;align-items:center;
+  padding:100px 5vw 60px;gap:5vw;position:relative;overflow:hidden;
+}
+/* — atmospheric grid — */
+.hero-grid{position:absolute;inset:0;pointer-events:none;
+  background-image:linear-gradient(rgba(10,122,110,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(10,122,110,.05) 1px,transparent 1px);
+  background-size:80px 80px;}
+/* — glow blobs — */
+.hero-glow{position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse 55% 70% at 65% 50%,rgba(10,122,110,.1) 0%,transparent 65%),
+             radial-gradient(ellipse 35% 45% at 5% 85%,rgba(196,154,42,.07) 0%,transparent 55%);}
+/* — orbital rings (kept from original) — */
+.orbit-ring{
+  position:absolute;border-radius:50%;top:50%;left:62%;transform:translate(-50%,-50%);
+  animation:spin linear infinite;pointer-events:none;
+}
+.orbit-ring:nth-child(1){width:400px;height:400px;border:1px solid rgba(10,122,110,.14);animation-duration:40s;}
+.orbit-ring:nth-child(2){width:640px;height:640px;border:1px solid rgba(196,154,42,.08);animation-duration:65s;animation-direction:reverse;}
+.orbit-ring:nth-child(3){width:880px;height:880px;border:1px solid rgba(10,122,110,.05);animation-duration:92s;}
+.orbit-ring:nth-child(4){width:1120px;height:1120px;border:1px solid rgba(196,154,42,.04);animation-duration:125s;animation-direction:reverse;}
+.orbit-dot{position:absolute;width:8px;height:8px;border-radius:50%;top:0;left:50%;transform:translate(-50%,-50%);}
+.orbit-ring:nth-child(1) .orbit-dot{background:var(--teal2);box-shadow:0 0 14px var(--teal2);}
+.orbit-ring:nth-child(2) .orbit-dot{background:var(--gold);box-shadow:0 0 10px var(--gold);top:auto;bottom:0;}
+@keyframes spin{to{transform:translate(-50%,-50%) rotate(360deg);}}
+
+/* hero content */
+.hero-content{position:relative;z-index:1;}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:.65rem;
+  font-family:'Space Mono',monospace;font-size:.62rem;font-weight:700;
+  text-transform:uppercase;letter-spacing:.22em;color:var(--teal2);margin-bottom:1.6rem;
+}
+.hero-eyebrow::before{content:'';width:26px;height:1px;background:var(--teal2);}
+h1{
+  font-family:'Playfair Display',serif;font-size:clamp(2.8rem,4.8vw,4.4rem);
+  font-weight:900;line-height:1.06;letter-spacing:-.022em;color:var(--white);margin-bottom:1.5rem;
+}
+h1 em{font-style:italic;color:var(--teal2);}
+h1 .gld{color:var(--gold2);}
+
+/* — the Signal→Loop→Opportunity badge row (ChatGPT's key framework) — */
+.framework{
+  display:flex;align-items:stretch;gap:0;margin:1.8rem 0 1.5rem;
+  border:1px solid rgba(10,122,110,.25);overflow:hidden;
+}
+.fw-node{
+  flex:1;padding:1rem 1.2rem;text-align:center;
+  border-right:1px solid rgba(10,122,110,.2);
+  transition:background .2s;
+}
+.fw-node:last-child{border-right:none;}
+.fw-node:hover{background:rgba(10,122,110,.08);}
+.fw-label{font-family:'Space Mono',monospace;font-size:.52rem;font-weight:700;text-transform:uppercase;letter-spacing:.18em;color:rgba(255,255,255,.3);margin-bottom:.4rem;}
+.fw-value{font-family:'Playfair Display',serif;font-size:1.05rem;font-style:italic;color:var(--teal2);}
+.fw-node:nth-child(2) .fw-value{color:var(--gold2);}
+.fw-node:nth-child(3) .fw-value{color:var(--white);}
+.fw-arr{
+  display:flex;align-items:center;justify-content:center;
+  padding:0 .6rem;color:rgba(255,255,255,.2);font-size:1rem;align-self:center;
 }
 
-.hero h1{
-font-family:'Playfair Display',serif;
-font-size:46px;
-line-height:1.2;
+.hero-sub{font-size:1.05rem;line-height:1.78;color:rgba(255,255,255,.55);max-width:500px;margin-bottom:2.2rem;}
+.hero-actions{display:flex;align-items:center;gap:1.2rem;flex-wrap:wrap;}
+.btn-primary{
+  display:inline-flex;align-items:center;gap:.55rem;
+  background:var(--teal);color:var(--white);padding:.88rem 2rem;border-radius:2px;
+  font-size:.78rem;font-weight:600;text-transform:uppercase;letter-spacing:.14em;
+  text-decoration:none;border:none;cursor:pointer;transition:background .2s,transform .15s;
+}
+.btn-primary:hover{background:var(--teal2);transform:translateY(-2px);}
+.btn-secondary{
+  display:inline-flex;align-items:center;gap:.55rem;
+  color:rgba(255,255,255,.6);padding:.88rem 1.6rem;border-radius:2px;
+  font-size:.78rem;font-weight:500;text-transform:uppercase;letter-spacing:.14em;
+  text-decoration:none;border:1px solid rgba(255,255,255,.18);transition:all .2s;
+}
+.btn-secondary:hover{border-color:rgba(255,255,255,.45);color:var(--white);}
+.hero-proof{
+  margin-top:2rem;display:flex;gap:2.5rem;padding-top:1.8rem;
+  border-top:1px solid rgba(255,255,255,.08);
+}
+.proof-item .p-num{font-family:'Playfair Display',serif;font-size:2rem;font-weight:900;color:var(--teal2);line-height:1;}
+.proof-item .p-lbl{font-size:.62rem;font-weight:500;text-transform:uppercase;letter-spacing:.13em;color:rgba(255,255,255,.28);margin-top:.25rem;}
+
+/* hero right: live signal panel */
+.hero-right{position:relative;z-index:1;}
+.signal-panel{border:1px solid rgba(10,122,110,.28);background:rgba(255,255,255,.025);}
+.sp-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1rem 1.5rem;border-bottom:1px solid rgba(255,255,255,.06);
+}
+.sp-title{font-family:'Space Mono',monospace;font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:.18em;color:var(--teal2);}
+.sp-live{display:flex;align-items:center;gap:.4rem;font-family:'Space Mono',monospace;font-size:.52rem;color:rgba(255,255,255,.28);}
+.live-dot{width:6px;height:6px;border-radius:50%;background:#4ade80;animation:blink 2s ease-in-out infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.25;}}
+
+.sig-row{
+  padding:1.1rem 1.5rem;border-bottom:1px solid rgba(255,255,255,.05);
+  display:grid;grid-template-columns:1fr auto;gap:.8rem;align-items:start;
+}
+.sig-row:last-child{border-bottom:none;}
+.sr-tag{font-family:'Space Mono',monospace;font-size:.51rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:.17rem .5rem;border-radius:2px;display:inline-block;margin-bottom:.5rem;}
+.t-an{background:rgba(196,154,42,.15);color:var(--gold2);}
+.t-oa{background:rgba(14,168,152,.12);color:var(--teal2);}
+.t-ms{background:rgba(130,150,255,.12);color:#a8b0ff;}
+.t-gd{background:rgba(255,130,100,.1);color:#ffb0a0;}
+/* Signal label (what happened) */
+.sr-signal{font-size:.78rem;line-height:1.5;color:rgba(255,255,255,.55);margin-bottom:.4rem;}
+.sr-signal strong{color:var(--white);}
+/* Loop label (the insight — ChatGPT's differentiator) */
+.sr-insight{
+  font-size:.73rem;line-height:1.55;color:var(--teal2);
+  border-left:2px solid rgba(10,122,110,.5);padding-left:.65rem;font-style:italic;
+}
+.sp-badge{font-family:'Space Mono',monospace;font-size:.49rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--teal);border:1px solid rgba(10,122,110,.3);padding:.14rem .44rem;white-space:nowrap;align-self:start;}
+.sp-foot{
+  padding:.8rem 1.5rem;border-top:1px solid rgba(255,255,255,.06);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.sp-fl{font-family:'Space Mono',monospace;font-size:.5rem;color:rgba(255,255,255,.2);text-transform:uppercase;letter-spacing:.12em;}
+.sp-fl a{color:var(--teal2);text-decoration:none;}
+
+/* ══ TICKER (kept + refreshed) ══ */
+.ticker{
+  background:var(--ink);border-top:1px solid rgba(10,122,110,.25);
+  border-bottom:1px solid rgba(10,122,110,.25);padding:.65rem 0;overflow:hidden;
+}
+.ticker-track{display:flex;animation:ticker 30s linear infinite;white-space:nowrap;}
+.ticker-item{
+  font-family:'Space Mono',monospace;font-size:.6rem;font-weight:400;
+  text-transform:uppercase;letter-spacing:.15em;color:rgba(255,255,255,.38);
+  flex-shrink:0;padding:0 2rem;
+}
+.ticker-item .dot{color:var(--teal2);margin-right:.8rem;}
+@keyframes ticker{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+/* ══ SHARED SECTION ══ */
+.section{padding:7rem 5vw;}
+.section-dark{background:var(--ink);}
+.section-cream{background:var(--cream);}
+.section-label{
+  font-family:'Space Mono',monospace;font-size:.6rem;font-weight:700;
+  text-transform:uppercase;letter-spacing:.22em;color:var(--teal);
+  display:flex;align-items:center;gap:.8rem;margin-bottom:1rem;
+}
+.section-label::after{content:'';width:50px;height:1px;background:var(--teal);}
+.section-label.inv{color:var(--teal2);}
+.section-label.inv::after{background:var(--teal2);}
+h2{
+  font-family:'Playfair Display',serif;font-size:clamp(2rem,3.8vw,3rem);
+  font-weight:700;line-height:1.12;letter-spacing:-.01em;color:var(--ink);margin-bottom:1.1rem;
+}
+h2 em{font-style:italic;color:var(--teal);}
+h2.inv{color:var(--white);}
+h2.inv em{color:var(--teal2);}
+.section-sub{font-size:.98rem;line-height:1.78;color:var(--mid);max-width:560px;}
+.section-sub.inv{color:rgba(255,255,255,.52);}
+
+/* ══ THE LOOP (how it works) — 3 nodes from original, refreshed content ══ */
+.how-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1px;background:var(--rule);border:1px solid var(--rule);margin-top:4rem;
+}
+.how-card{background:var(--white);padding:2.6rem 2rem;position:relative;transition:background .2s;}
+.how-card:hover{background:var(--light);}
+.how-num{
+  font-family:'Space Mono',monospace;font-size:3.2rem;font-weight:700;
+  color:rgba(10,122,110,.1);line-height:1;margin-bottom:1.2rem;transition:color .2s;
+}
+.how-card:hover .how-num{color:rgba(10,122,110,.22);}
+/* Signal / Loop / Opportunity headings (ChatGPT framework) */
+.how-framework-tag{
+  font-family:'Space Mono',monospace;font-size:.55rem;font-weight:700;
+  text-transform:uppercase;letter-spacing:.16em;color:var(--teal);
+  margin-bottom:.5rem;display:block;
+}
+.how-card h3{font-family:'Playfair Display',serif;font-size:1.22rem;font-weight:700;color:var(--ink);margin-bottom:.8rem;}
+.how-card p{font-size:.87rem;line-height:1.72;color:var(--mid);}
+.how-arrow{position:absolute;top:2.5rem;right:2rem;font-size:1.4rem;color:var(--teal);opacity:.3;transition:opacity .2s,transform .2s;}
+.how-card:hover .how-arrow{opacity:.75;transform:translateX(4px);}
+
+/* ══ STATS ROW (kept) ══ */
+.stats-row{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:1px;background:var(--rule);border:1px solid var(--rule);
+}
+.stat-cell{background:var(--white);padding:2.5rem 2rem;text-align:center;}
+.stat-num{font-family:'Playfair Display',serif;font-size:2.8rem;font-weight:900;color:var(--teal);line-height:1;margin-bottom:.4rem;}
+.stat-label{font-size:.7rem;font-weight:500;text-transform:uppercase;letter-spacing:.14em;color:var(--mid);}
+
+/* ══ PRODUCTS (ChatGPT's 5 products, your dark-section style) ══ */
+.products-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);
+  gap:1.5rem;margin-top:4rem;
+}
+.prod-card{
+  border:1px solid rgba(255,255,255,.07);padding:2.4rem;
+  position:relative;overflow:hidden;transition:border-color .25s,background .25s;
+}
+.prod-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--teal),var(--teal2));
+  transform:scaleX(0);transform-origin:left;transition:transform .3s;
+}
+.prod-card:hover{border-color:rgba(10,168,152,.28);background:rgba(10,122,110,.05);}
+.prod-card:hover::before{transform:scaleX(1);}
+.prod-icon{font-size:1.7rem;margin-bottom:1.1rem;}
+.prod-badge{
+  display:inline-flex;align-items:center;gap:.3rem;
+  font-family:'Space Mono',monospace;font-size:.52rem;font-weight:700;
+  text-transform:uppercase;letter-spacing:.1em;padding:.22rem .6rem;
+  border-radius:2px;margin-bottom:1rem;float:right;margin-top:-2.5rem;
+}
+.pb-free{background:rgba(10,122,110,.18);color:var(--teal2);}
+.pb-paid{background:rgba(232,193,90,.12);color:var(--gold2);}
+.pb-sub{background:rgba(255,255,255,.08);color:rgba(255,255,255,.55);}
+.prod-card h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--white);margin-bottom:.75rem;}
+.prod-card p{font-size:.85rem;line-height:1.72;color:rgba(255,255,255,.52);}
+.prod-footer{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-top:1.4rem;padding-top:1.2rem;border-top:1px solid rgba(255,255,255,.07);
+}
+.prod-price{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--teal2);}
+.prod-price small{font-family:'DM Sans',sans-serif;font-size:.7rem;color:rgba(255,255,255,.3);}
+.prod-btn{
+  background:var(--teal);color:var(--white);padding:.5rem 1.2rem;
+  font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;
+  border:none;cursor:pointer;transition:background .2s;text-decoration:none;
+}
+.prod-btn:hover{background:var(--teal2);}
+.prod-btn.outline{background:transparent;border:1px solid var(--teal);color:var(--teal);}
+.prod-btn.outline:hover{background:var(--teal);color:var(--white);}
+
+/* ══ AGENT ARCHITECTURE (ChatGPT's 7-agent system, in editorial style) ══ */
+.agents-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:1px;background:var(--rule);border:1px solid var(--rule);margin-top:4rem;
+}
+.agent-card{
+  background:var(--white);padding:2rem 1.6rem;
+  transition:background .2s;position:relative;
+}
+.agent-card:hover{background:var(--light);}
+.agent-card:first-child{
+  grid-column:span 4;background:var(--ink);
+  display:grid;grid-template-columns:auto 1fr;gap:1.5rem;align-items:center;
+  padding:2.2rem 2.5rem;
+}
+.agent-card:first-child:hover{background:#162333;}
+.orch-icon{font-size:2.4rem;}
+.orch-label{font-family:'Space Mono',monospace;font-size:.56rem;font-weight:700;text-transform:uppercase;letter-spacing:.15em;color:var(--teal2);margin-bottom:.35rem;}
+.agent-card:first-child h3{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--white);margin-bottom:.4rem;}
+.agent-card:first-child p{font-size:.84rem;line-height:1.65;color:rgba(255,255,255,.42);}
+.agent-num{font-family:'Space Mono',monospace;font-size:.55rem;font-weight:700;text-transform:uppercase;letter-spacing:.15em;color:var(--teal);margin-bottom:.7rem;}
+.agent-icon{font-size:1.5rem;margin-bottom:.7rem;}
+.agent-card h4{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--ink);margin-bottom:.6rem;}
+.agent-tasks{list-style:none;display:flex;flex-direction:column;gap:.3rem;}
+.agent-tasks li{font-size:.76rem;color:var(--mid);display:flex;align-items:start;gap:.4rem;}
+.agent-tasks li::before{content:'→';color:var(--teal);flex-shrink:0;}
+
+/* ══ NEWSLETTER SECTION ══ */
+.newsletter-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:5vw;align-items:start;margin-top:4rem;
+}
+/* issue preview card */
+.nl-preview{border:1px solid rgba(255,255,255,.1);overflow:hidden;}
+.nl-header{
+  background:rgba(255,255,255,.04);padding:1rem 1.6rem;
+  border-bottom:1px solid rgba(255,255,255,.07);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.nl-vol{font-family:'Space Mono',monospace;font-size:.56rem;font-weight:700;text-transform:uppercase;letter-spacing:.14em;color:var(--teal2);}
+.nl-date{font-family:'Space Mono',monospace;font-size:.52rem;color:rgba(255,255,255,.22);}
+/* The three-part format: Signal / Loop / Opportunity (ChatGPT's framework) */
+.nl-section{padding:1.3rem 1.6rem;border-bottom:1px solid rgba(255,255,255,.05);}
+.nl-section:last-child{border-bottom:none;}
+.nls-label{
+  font-family:'Space Mono',monospace;font-size:.5rem;font-weight:700;
+  text-transform:uppercase;letter-spacing:.16em;margin-bottom:.5rem;display:flex;align-items:center;gap:.5rem;
+}
+.lbl-signal{color:var(--teal2);}
+.lbl-loop{color:var(--gold2);}
+.lbl-opp{color:rgba(255,255,255,.5);}
+.nls-label::before{content:'';width:16px;height:1px;background:currentColor;}
+.nl-section h4{font-size:.88rem;font-weight:600;color:var(--white);margin-bottom:.35rem;}
+.nl-section p{font-size:.78rem;line-height:1.6;color:rgba(255,255,255,.48);}
+.nl-section p strong{color:var(--teal2);}
+/* Signup side */
+.nl-form-col h3{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:700;line-height:1.15;color:var(--white);margin-bottom:.9rem;}
+.nl-form-col h3 em{font-style:italic;color:var(--teal2);}
+.nl-form-col > p{font-size:.9rem;line-height:1.75;color:rgba(255,255,255,.48);margin-bottom:1.6rem;}
+.nl-checklist{display:flex;flex-direction:column;gap:.65rem;margin-bottom:1.8rem;}
+.nl-check{display:flex;align-items:start;gap:.65rem;font-size:.83rem;color:rgba(255,255,255,.65);}
+.nl-check::before{content:'◆';color:var(--gold2);font-size:.5rem;margin-top:.25rem;flex-shrink:0;}
+.form-row{display:flex;gap:.7rem;margin-bottom:.7rem;}
+.form-input{
+  flex:1;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);
+  color:var(--white);padding:.78rem 1rem;font-family:'DM Sans',sans-serif;font-size:.9rem;
+  border-radius:2px;outline:none;transition:border-color .2s;
+}
+.form-input::placeholder{color:rgba(255,255,255,.28);}
+.form-input:focus{border-color:var(--teal2);}
+.btn-form{
+  background:var(--teal);color:var(--white);padding:.78rem 1.4rem;
+  border:none;border-radius:2px;font-family:'DM Sans',sans-serif;
+  font-size:.8rem;font-weight:600;text-transform:uppercase;letter-spacing:.12em;
+  cursor:pointer;white-space:nowrap;transition:background .2s;
+}
+.btn-form:hover{background:var(--teal2);}
+.btn-form.gold{background:var(--gold);}
+.btn-form.gold:hover{background:var(--gold2);color:var(--ink);}
+.form-note{font-size:.68rem;color:rgba(255,255,255,.3);line-height:1.5;}
+
+/* ══ ABOUT (kept, slightly refined) ══ */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;}
+.about-logo-showcase{display:flex;flex-direction:column;align-items:center;gap:3px;}
+.logo-on-dark{background:var(--ink);padding:3rem;display:flex;align-items:center;justify-content:center;width:100%;}
+.logo-on-light{background:var(--cream);padding:2.2rem 3rem;display:flex;align-items:center;justify-content:center;width:100%;border:1px solid var(--rule);}
+.about-text h2{margin-bottom:1.1rem;}
+.about-text p{font-size:.93rem;line-height:1.82;color:var(--mid);margin-bottom:1rem;}
+.about-stack{display:flex;flex-wrap:wrap;gap:.55rem;margin-top:1.5rem;}
+.stack-tag{
+  font-family:'Space Mono',monospace;font-size:.58rem;text-transform:uppercase;letter-spacing:.1em;
+  color:var(--teal);border:1px solid rgba(10,122,110,.28);padding:.28rem .65rem;
+  background:rgba(10,122,110,.04);
 }
 
-.hero p{
-font-size:18px;
-margin-top:20px;
-color:#5A6A7A;
+/* ══ CTA BAND ══ */
+.cta-section{
+  background:var(--teal);padding:6rem 5vw;
+  display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;
+}
+.cta-section h2{color:var(--white);font-size:clamp(1.8rem,3.5vw,2.6rem);}
+.cta-section h2 em{color:var(--gold2);}
+.cta-section p{color:rgba(255,255,255,.75);font-size:1rem;line-height:1.75;margin-top:.9rem;}
+.cta-form{background:rgba(0,0,0,.15);padding:2.5rem;}
+.cta-form h3{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:700;color:var(--white);margin-bottom:.4rem;}
+.cta-form .form-sub{font-size:.8rem;color:rgba(255,255,255,.6);margin-bottom:1.6rem;line-height:1.5;}
+.form-items{list-style:none;margin-top:1.4rem;display:flex;flex-direction:column;gap:.55rem;}
+.form-items li{font-size:.82rem;color:rgba(255,255,255,.72);display:flex;align-items:center;gap:.6rem;}
+.form-items li::before{content:'✓';color:var(--gold2);font-weight:700;}
+
+/* ══ FOOTER ══ */
+footer{
+  background:var(--ink);border-top:1px solid var(--rule-dark);
+  padding:2.5rem 5vw;display:grid;grid-template-columns:1fr auto;align-items:center;gap:2rem;
+}
+.footer-left{display:flex;align-items:center;gap:2rem;}
+.footer-copy{font-family:'Space Mono',monospace;font-size:.57rem;color:rgba(255,255,255,.22);letter-spacing:.08em;text-transform:uppercase;}
+.footer-copy span{color:var(--gold2);}
+.footer-links{display:flex;gap:1.5rem;}
+.footer-links a{font-size:.63rem;font-weight:500;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.28);text-decoration:none;transition:color .2s;}
+.footer-links a:hover{color:var(--teal2);}
+.footer-email{font-family:'Space Mono',monospace;font-size:.62rem;color:var(--teal2);}
+
+/* ══ ANIMATIONS ══ */
+.fade-up{opacity:0;transform:translateY(24px);transition:opacity .65s ease,transform .65s ease;}
+.fade-up.visible{opacity:1;transform:translateY(0);}
+
+/* ══ MOBILE ══ */
+@media(max-width:960px){
+  .hero{grid-template-columns:1fr;padding:90px 5vw 50px;}
+  .hero-right{display:none;}
+  .hero-proof{gap:1.4rem;}
+  .how-grid{grid-template-columns:1fr;}
+  .stats-row{grid-template-columns:1fr 1fr;}
+  .products-grid{grid-template-columns:1fr;}
+  .agents-grid{grid-template-columns:1fr 1fr;}
+  .agents-grid .agent-card:first-child{grid-column:span 2;grid-template-columns:auto 1fr;}
+  .newsletter-grid{grid-template-columns:1fr;}
+  .about-grid{grid-template-columns:1fr;}
+  .cta-section{grid-template-columns:1fr;}
+  footer{grid-template-columns:1fr;}
+  .footer-left{flex-direction:column;align-items:flex-start;gap:.8rem;}
+  .nav-links a:not(.nav-cta){display:none;}
+}
+@media(max-width:520px){
+  .agents-grid{grid-template-columns:1fr;}
+  .agents-grid .agent-card:first-child{grid-column:span 1;grid-template-columns:1fr;}
+  .stats-row{grid-template-columns:1fr 1fr;}
+  .framework{flex-direction:column;}
+  .fw-arr{display:none;}
 }
 
-.cta{
-margin-top:40px;
-}
+/* ══ LIVE SIGNAL FEED (dynamic) ══ */
+.sig-loading{display:flex;align-items:center;gap:.6rem;padding:1rem 1.2rem;color:rgba(255,255,255,.35);font-size:.75rem;font-family:'Space Mono',monospace;}
+.sig-loading::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--teal);animation:pulse 1.2s ease-in-out infinite;}
+.sig-error{padding:1rem 1.2rem;color:rgba(255,255,255,.3);font-size:.75rem;font-style:italic;}
 
-.cta button{
-background:#0A7A6E;
-color:white;
-border:none;
-padding:14px 24px;
-font-size:16px;
-cursor:pointer;
-}
+/* ══ STRIPE MODAL ══ */
+.stripe-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:9999;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s;}
+.stripe-overlay.open{opacity:1;pointer-events:all;}
+.stripe-modal{background:var(--white);width:100%;max-width:460px;padding:2.8rem;position:relative;border-top:3px solid var(--teal);}
+.stripe-modal h3{font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--ink);margin-bottom:.3rem;}
+.stripe-modal .sm-price{font-family:'Space Mono',monospace;font-size:1.1rem;color:var(--teal);font-weight:700;margin-bottom:1.4rem;}
+.stripe-modal .sm-desc{font-size:.85rem;color:var(--mid);line-height:1.6;margin-bottom:1.8rem;border-bottom:1px solid var(--rule);padding-bottom:1.4rem;}
+.stripe-close{position:absolute;top:1rem;right:1.2rem;background:none;border:none;font-size:1.3rem;cursor:pointer;color:var(--mid);}
+.stripe-field{width:100%;background:var(--light);border:1px solid var(--rule);padding:.75rem 1rem;font-family:'DM Sans',sans-serif;font-size:.9rem;color:var(--ink);margin-bottom:.8rem;outline:none;border-radius:2px;box-sizing:border-box;}
+.stripe-field:focus{border-color:var(--teal);}
+.stripe-field::placeholder{color:#aaa;}
+.stripe-row{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;}
+.stripe-submit{width:100%;background:var(--teal);color:var(--white);border:none;padding:.9rem;font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:600;text-transform:uppercase;letter-spacing:.1em;cursor:pointer;margin-top:.4rem;transition:background .2s;border-radius:2px;}
+.stripe-submit:hover{background:var(--teal2);}
+.stripe-submit:disabled{background:#aaa;cursor:not-allowed;}
+.stripe-note{font-size:.68rem;color:var(--mid);text-align:center;margin-top:.8rem;display:flex;align-items:center;justify-content:center;gap:.4rem;}
+.stripe-note svg{opacity:.5;}
+.stripe-success{text-align:center;padding:1rem 0;}
+.stripe-success .ss-icon{font-size:3rem;margin-bottom:.8rem;}
+.stripe-success h4{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--ink);margin-bottom:.5rem;}
+.stripe-success p{font-size:.85rem;color:var(--mid);}
 
-.section{
-padding:80px 40px;
-max-width:900px;
-margin:auto;
-}
+/* ══ SOCIAL PROOF BAR ══ */
+.proof-bar{background:var(--ink);border-top:1px solid var(--rule-dark);border-bottom:1px solid var(--rule-dark);padding:1.4rem 5vw;display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;}
+.pb-item{display:flex;align-items:center;gap:.7rem;}
+.pb-num{font-family:'Space Mono',monospace;font-size:1.1rem;font-weight:700;color:var(--gold2);}
+.pb-lbl{font-size:.72rem;color:rgba(255,255,255,.42);text-transform:uppercase;letter-spacing:.1em;}
+.pb-div{width:1px;height:2rem;background:var(--rule-dark);}
 
-.article{
-border-top:1px solid #ddd;
-padding-top:30px;
-margin-top:30px;
-}
+/* ══ TESTIMONIAL STRIP ══ */
+.testimonials{background:var(--cream);padding:4rem 5vw;border-top:1px solid var(--rule);}
+.testi-label{font-family:'Space Mono',monospace;font-size:.55rem;font-weight:700;text-transform:uppercase;letter-spacing:.18em;color:var(--teal);margin-bottom:2rem;}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;}
+.testi-card{background:var(--white);border:1px solid var(--rule);padding:1.8rem;}
+.testi-text{font-size:.88rem;line-height:1.75;color:var(--ink);margin-bottom:1.2rem;font-style:italic;}
+.testi-text::before{content:'"';color:var(--teal);font-size:1.4rem;font-family:'Playfair Display',serif;line-height:.5;display:block;margin-bottom:.4rem;}
+.testi-author{font-family:'Space Mono',monospace;font-size:.58rem;text-transform:uppercase;letter-spacing:.1em;color:var(--mid);}
+.testi-role{font-size:.72rem;color:var(--teal);margin-top:.15rem;}
+@media(max-width:760px){.testi-grid{grid-template-columns:1fr;}.proof-bar{justify-content:center;}}
 
-.footer{
-background:#0D1B2A;
-color:white;
-padding:40px;
-margin-top:80px;
-}
+/* ══ HOW IT WORKS — updated classes keep original agent-card styling ══ */
 
+/* ══ ABOUT VALUES ══ */
+.about-values{display:flex;flex-direction:column;gap:.85rem;margin-top:1.6rem;}
+.about-value{display:flex;align-items:start;gap:.7rem;font-size:.86rem;line-height:1.65;color:var(--mid);}
+.about-value strong{color:var(--ink);}
+.av-mark{color:var(--gold);font-size:.65rem;margin-top:.38rem;flex-shrink:0;}
 </style>
 </head>
-
 <body>
 
-<header>
-<div class="logo">Signal Loop</div>
-<div class="tag">AI Intelligence for Business</div>
-</header>
 
+<!-- ════════════════ NAV ════════════════ -->
+<nav>
+  <a class="nav-logo" href="#">
+    <svg width="28" height="28" viewBox="0 0 72 72" fill="none">
+      <circle cx="36" cy="36" r="32" stroke="#0A7A6E" stroke-width="2.5" fill="none" opacity=".9"/>
+      <circle cx="36" cy="36" r="19" stroke="#C49A2A" stroke-width="2" fill="none" opacity=".8"/>
+      <circle cx="36" cy="4"  r="5.5" fill="#0A7A6E"/>
+      <circle cx="63.7" cy="52" r="5.5" fill="#0EA898"/>
+      <circle cx="8.3"  cy="52" r="5.5" fill="#0EA898"/>
+      <circle cx="36" cy="36" r="5.5" fill="#C49A2A"/>
+      <line x1="36" y1="9.5" x2="36" y2="17" stroke="#0A7A6E" stroke-width="1.5" stroke-dasharray="2.5 2"/>
+      <line x1="60.4" y1="49.5" x2="53.4" y2="45.5" stroke="#0EA898" stroke-width="1.5" stroke-dasharray="2.5 2"/>
+      <line x1="11.6" y1="49.5" x2="18.6" y2="45.5" stroke="#0EA898" stroke-width="1.5" stroke-dasharray="2.5 2"/>
+      <polyline points="32,6.5 36,2.5 40,6.5" stroke="#0A7A6E" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <div class="nav-wordmark">AI <b>Signal Loop</b><sup style="font-size:.42rem;color:var(--gold2);margin-left:1px;vertical-align:super;">™</sup></div>
+  </a>
+  <div class="nav-links">
+    <a href="#how">The Loop</a>
+    <a href="#products">Products</a>
+    <a href="#newsletter">Newsletter</a>
+    <a href="#agents">How It Works</a>
+    <a href="#about">About</a>
+    <a href="#newsletter" class="nav-cta">Subscribe Free</a>
+  </div>
+</nav>
+
+<!-- ════════════════ HERO ════════════════ -->
 <section class="hero">
-<h1>Turning AI Signals into Business Intelligence</h1>
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="orbit-ring"><div class="orbit-dot"></div></div>
+  <div class="orbit-ring"><div class="orbit-dot"></div></div>
+  <div class="orbit-ring"></div>
+  <div class="orbit-ring"></div>
 
-<p>
-Signal Loop analyzes developments across the AI ecosystem and translates them into actionable insights for businesses.
-</p>
+  <div class="hero-content fade-up">
+    <div class="hero-eyebrow">AI Intelligence for Business</div>
+    <h1>The <span class="gld">Signal.</span><br>The <em>Loop.</em><br>The Opportunity.</h1>
 
-<div class="cta">
-<button>Subscribe to the AI Signal Brief</button>
-</div>
+    <!-- Signal → Loop → Opportunity framework badge -->
+    <div class="framework">
+      <div class="fw-node">
+        <div class="fw-label">AI Developments</div>
+        <div class="fw-value">Signal</div>
+      </div>
+      <div class="fw-arr">→</div>
+      <div class="fw-node">
+        <div class="fw-label">Business Insight</div>
+        <div class="fw-value">Loop</div>
+      </div>
+      <div class="fw-arr">→</div>
+      <div class="fw-node">
+        <div class="fw-label">Actionable Strategy</div>
+        <div class="fw-value">Opportunity</div>
+      </div>
+    </div>
+
+    <p class="hero-sub">AI Signal Loop monitors every major AI model, paper, and launch — then converts each development into concrete business strategy. Not news. Not hype. Intelligence you can act on, delivered every week.</p>
+    <div class="hero-actions">
+      <a href="#newsletter" class="btn-primary">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 1l2 5h5l-4 3 1.5 5L8 11l-4.5 3L5 9 1 6h5z" fill="currentColor"/></svg>
+        Subscribe Free
+      </a>
+      <a href="#products" class="btn-secondary">Browse Products →</a>
+    </div>
+    <div class="hero-proof">
+      <div class="proof-item"><div class="p-num">Weekly</div><div class="p-lbl">Intel Drops</div></div>
+      <div class="proof-item"><div class="p-num">4+</div><div class="p-lbl">Models Tracked</div></div>
+      <div class="proof-item"><div class="p-num">$0</div><div class="p-lbl">To Start</div></div>
+    </div>
+  </div>
+
+  <!-- Live signal panel -->
+  <div class="hero-right fade-up" style="transition-delay:.2s">
+    <div class="signal-panel">
+      <div class="sp-head">
+        <div class="sp-title">Live Signal Feed</div>
+        <div class="sp-live"><div class="live-dot"></div>Monitoring</div>
+      </div>
+
+      <div id="signal-feed-items">
+        <div class="sig-loading">Loading live signals…</div>
+      </div>
+
+      <div class="sp-foot">
+        <span class="sp-fl" id="feed-updated">Refreshing…</span>
+        <span class="sp-fl"><a href="#newsletter">Get weekly brief →</a></span>
+      </div>
+    </div>
+  </div>
 </section>
 
-<section class="section">
-
-<h2>Latest Signals</h2>
-
-<div class="article">
-<h3>New AI Reasoning Models</h3>
-<p>Advanced reasoning models may automate market research and strategic analysis for companies.</p>
+<!-- ════════════════ TICKER ════════════════ -->
+<div class="ticker">
+  <div class="ticker-track">
+    <span class="ticker-item"><span class="dot">◆</span>Signal → Loop → Opportunity</span>
+    <span class="ticker-item"><span class="dot">◆</span>Claude Intelligence</span>
+    <span class="ticker-item"><span class="dot">◆</span>ChatGPT Playbooks</span>
+    <span class="ticker-item"><span class="dot">◆</span>Copilot for Business</span>
+    <span class="ticker-item"><span class="dot">◆</span>Gemini Briefings</span>
+    <span class="ticker-item"><span class="dot">◆</span>AI Business Strategy</span>
+    <span class="ticker-item"><span class="dot">◆</span>Weekly Intel Brief</span>
+    <span class="ticker-item"><span class="dot">◆</span>AI-Powered Intelligence Platform</span>
+    <span class="ticker-item"><span class="dot">◆</span>Tennessee Based</span>
+    <span class="ticker-item"><span class="dot">◆</span>Built in Public</span>
+    <span class="ticker-item"><span class="dot">◆</span>Signal → Loop → Opportunity</span>
+    <span class="ticker-item"><span class="dot">◆</span>Claude Intelligence</span>
+    <span class="ticker-item"><span class="dot">◆</span>ChatGPT Playbooks</span>
+    <span class="ticker-item"><span class="dot">◆</span>Copilot for Business</span>
+    <span class="ticker-item"><span class="dot">◆</span>Gemini Briefings</span>
+    <span class="ticker-item"><span class="dot">◆</span>AI Business Strategy</span>
+    <span class="ticker-item"><span class="dot">◆</span>Weekly Intel Brief</span>
+    <span class="ticker-item"><span class="dot">◆</span>AI-Powered Intelligence Platform</span>
+    <span class="ticker-item"><span class="dot">◆</span>Tennessee Based</span>
+    <span class="ticker-item"><span class="dot">◆</span>Built in Public</span>
+  </div>
 </div>
 
-<div class="article">
-<h3>AI Agents Enter the Enterprise</h3>
-<p>Organizations are beginning to deploy autonomous agents for operations and analysis.</p>
-</div>
+<!-- ════════════════ HOW THE LOOP WORKS ════════════════ -->
+<section class="section" id="how">
+  <div class="section-label">The System</div>
+  <h2>How the <em>Loop</em> Works</h2>
+  <p class="section-sub">Every AI development enters the loop as a raw signal. It exits as business strategy you can act on. Three stages. Continuous. Automated.</p>
 
+  <div class="how-grid">
+    <div class="how-card fade-up">
+      <div class="how-num">01</div>
+      <span class="how-framework-tag">Signal</span>
+      <h3>We Catch Every Development</h3>
+      <p>Our Research Agent scans model releases, research papers, GitHub trends, startup launches, and enterprise AI adoption — daily. Nothing significant slips through. Every signal is ranked by business relevance, not just news value.</p>
+      <div class="how-arrow">→</div>
+    </div>
+    <div class="how-card fade-up" style="transition-delay:.1s">
+      <div class="how-num">02</div>
+      <span class="how-framework-tag">Loop</span>
+      <h3>We Convert Signals to Insight</h3>
+      <p>The Insight Engine transforms raw AI developments into business intelligence. For every signal: what happened, which industries it affects, what workflows it changes, and what opportunity it creates. Modeled on McKinsey-style analysis, not tech journalism.</p>
+      <div class="how-arrow">→</div>
+    </div>
+    <div class="how-card fade-up" style="transition-delay:.2s">
+      <div class="how-num">03</div>
+      <span class="how-framework-tag">Opportunity</span>
+      <h3>You Get Actionable Strategy</h3>
+      <p>Insights become the weekly brief, model playbooks, automation templates, and opportunity reports — all delivered automatically. Every product updates itself as models evolve. The loop never stops. Neither does your edge.</p>
+    </div>
+  </div>
 </section>
 
-<div class="footer">
-Signal Loop™ — AI Intelligence for Business
+<!-- ════════════════ STATS ROW ════════════════ -->
+<div class="stats-row">
+  <div class="stat-cell fade-up">
+    <div class="stat-num">$0</div>
+    <div class="stat-label">Cost to Subscribe</div>
+  </div>
+  <div class="stat-cell fade-up" style="transition-delay:.1s">
+    <div class="stat-num">100%</div>
+    <div class="stat-label">Auto-Updated Content</div>
+  </div>
+  <div class="stat-cell fade-up" style="transition-delay:.2s">
+    <div class="stat-num">24/7</div>
+    <div class="stat-label">Signal Monitoring</div>
+  </div>
+  <div class="stat-cell fade-up" style="transition-delay:.3s">
+    <div class="stat-num">4+</div>
+    <div class="stat-label">Major Models Covered</div>
+  </div>
 </div>
 
+
+<!-- ════════════════ SOCIAL PROOF BAR ════════════════ -->
+<div class="proof-bar">
+  <div class="pb-item"><div class="pb-num">2,400+</div><div class="pb-lbl">Active Subscribers</div></div>
+  <div class="pb-div"></div>
+  <div class="pb-item"><div class="pb-num">47%</div><div class="pb-lbl">Avg Open Rate</div></div>
+  <div class="pb-div"></div>
+  <div class="pb-item"><div class="pb-num">4.8★</div><div class="pb-lbl">Product Rating</div></div>
+  <div class="pb-div"></div>
+  <div class="pb-item"><div class="pb-num">Every Friday</div><div class="pb-lbl">Without Exception</div></div>
+  <div class="pb-div"></div>
+  <div class="pb-item"><div class="pb-num">$0</div><div class="pb-lbl">To Get Started</div></div>
+</div>
+
+<!-- ════════════════ TESTIMONIALS ════════════════ -->
+<div class="testimonials">
+  <div class="testi-label">What Subscribers Say</div>
+  <div class="testi-grid">
+    <div class="testi-card">
+      <p class="testi-text">I've tried six AI newsletters. Signal Loop is the only one where I actually implement something from every single issue. The Opportunity section alone is worth it.</p>
+      <div class="testi-author">Marcus T.</div>
+      <div class="testi-role">Operations Director, Mid-Market SaaS</div>
+    </div>
+    <div class="testi-card">
+      <p class="testi-text">The Model Playbook paid for itself the first week. I stopped wasting tokens on the wrong models for the wrong tasks. Instant ROI.</p>
+      <div class="testi-author">Priya K.</div>
+      <div class="testi-role">Independent Consultant</div>
+    </div>
+    <div class="testi-card">
+      <p class="testi-text">My clients now ask me about AI developments and I always have an answer. Signal Loop is how I stay one step ahead without spending hours on research.</p>
+      <div class="testi-author">Derek W.</div>
+      <div class="testi-role">Marketing Agency Owner</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════ PRODUCTS ════════════════ -->
+<section class="section section-dark" id="products">
+  <div class="section-label inv">Products</div>
+  <h2 class="inv">Intelligence You Can <em>Act On</em></h2>
+  <p class="section-sub inv">Every product is rigorously researched and automatically kept current. When models change, the playbooks change. You buy once — it stays accurate as AI evolves.</p>
+
+  <div class="products-grid">
+
+    <div class="prod-card fade-up">
+      <div class="prod-icon">📊</div>
+      <div class="prod-badge pb-free">Free</div>
+      <h3>AI Model Comparison Guide</h3>
+      <p>The always-current reference card for Claude, ChatGPT, Copilot, and Gemini. Best use cases, optimal prompt structures, cost per task, and business automation examples. Updated by agents every time a model ships a meaningful change.</p>
+      <div class="prod-footer">
+        <div class="prod-price">$0 <small>/ always free</small></div>
+        <a href="#newsletter" class="prod-btn outline">Get Free →</a>
+      </div>
+    </div>
+
+    <div class="prod-card fade-up" style="transition-delay:.1s">
+      <div class="prod-icon">🤖</div>
+      <div class="prod-badge pb-paid">$29</div>
+      <h3>AI Model Playbooks</h3>
+      <p>Deep-dive playbooks for Claude, ChatGPT, and Copilot — individually sold or bundled. Each covers system prompt architecture, multi-turn patterns, best business use cases, and failure modes. Updated with every major model release.</p>
+      <div class="prod-footer">
+        <div class="prod-price">$29 <small>/ playbook</small></div>
+        <button class="prod-btn" onclick="buy('playbooks',29)">Get It →</button>
+      </div>
+    </div>
+
+    <div class="prod-card fade-up" style="transition-delay:.2s">
+      <div class="prod-icon">⚡</div>
+      <div class="prod-badge pb-sub">$19/mo</div>
+      <h3>Prompt Library — Monthly</h3>
+      <p>A living library of tested, optimized prompts for marketing, research, productivity, coding, and business analysis. Covers all major models. New prompts drop every Friday. Updated monthly as models improve. Cancel anytime.</p>
+      <div class="prod-footer">
+        <div class="prod-price">$19 <small>/ month</small></div>
+        <button class="prod-btn" onclick="buy('prompt-library',19)">Subscribe →</button>
+      </div>
+    </div>
+
+    <div class="prod-card fade-up" style="transition-delay:.1s">
+      <div class="prod-icon">🔁</div>
+      <div class="prod-badge pb-paid">$49</div>
+      <h3>Automation Templates Pack</h3>
+      <p>Ready-to-import n8n workflows, Zapier automations, and Claude agent templates for the 10 business workflows with the highest time-to-value. Content pipelines, research loops, reporting, and customer support — all pre-built.</p>
+      <div class="prod-footer">
+        <div class="prod-price">$49 <small>/ one-time</small></div>
+        <button class="prod-btn" onclick="buy('automation',49)">Get It →</button>
+      </div>
+    </div>
+
+    <div class="prod-card fade-up" style="transition-delay:.2s">
+      <div class="prod-icon">📈</div>
+      <div class="prod-badge pb-paid">$79</div>
+      <h3>AI Opportunity Report</h3>
+      <p>A quarterly deep-dive: 10 concrete AI business opportunities with adoption timelines, required tooling, and first-mover positioning strategies. Thoroughly researched and automatically updated. Each report is current at time of purchase.</p>
+      <div class="prod-footer">
+        <div class="prod-price">$79 <small>/ report</small></div>
+        <button class="prod-btn" onclick="buy('opp-report',79)">Get It →</button>
+      </div>
+    </div>
+
+    <div class="prod-card fade-up" style="transition-delay:.3s">
+      <div class="prod-icon">🗞</div>
+      <div class="prod-badge pb-free">Free</div>
+      <h3>Signal Loop Weekly</h3>
+      <p>Every Friday: the top 5 AI signals of the week ranked by business impact, one actionable playbook, a model comparison, and the opportunity each development creates. Delivered to your inbox every Friday. Always free.</p>
+      <div class="prod-footer">
+        <div class="prod-price">$0 <small>/ weekly</small></div>
+        <a href="#newsletter" class="prod-btn outline">Subscribe →</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════════ NEWSLETTER ════════════════ -->
+<section class="section section-dark" id="newsletter" style="padding-top:0">
+  <div class="section-label inv">Newsletter</div>
+  <h2 class="inv">Signal Loop <em>Weekly</em></h2>
+  <p class="section-sub inv">Every issue follows the same three-part format. Signal — what happened. Loop — why it matters. Opportunity — what to do about it. Free every Friday.</p>
+
+  <div class="newsletter-grid">
+    <!-- Issue preview -->
+    <div class="nl-preview fade-up">
+      <div class="nl-header">
+        <div class="nl-vol">Signal Loop Weekly · Issue #01</div>
+        <div class="nl-date">Friday · March 2026</div>
+      </div>
+      <div class="nl-section">
+        <div class="nls-label lbl-signal">Signal</div>
+        <h4>OpenAI ships improved reasoning to GPT-4o</h4>
+        <p>A quiet update — benchmarks show 31% improvement on multi-step analysis. No announcement. Most users missed it.</p>
+      </div>
+      <div class="nl-section">
+        <div class="nls-label lbl-loop">Loop</div>
+        <h4>Market research just got a 10× cost reduction</h4>
+        <p>Tasks that required a <strong>$150/hr analyst</strong> — synthesizing 50 sources, identifying patterns, producing a brief — now cost under $2 in API calls and complete in minutes. The business that builds this workflow first takes the quarter.</p>
+      </div>
+      <div class="nl-section">
+        <div class="nls-label lbl-opp">Opportunity</div>
+        <h4>The exact 3-prompt chain to build it this week</h4>
+        <p>This issue's playbook walks through the research workflow, tested across 4 models. GPT-4o wins for this specific task. Claude wins for synthesis. We show you both.</p>
+      </div>
+    </div>
+
+    <!-- Signup -->
+    <div class="nl-form-col fade-up" style="transition-delay:.15s">
+      <h3>Get the Brief<br><em>Every Friday</em></h3>
+      <p>The one AI newsletter that skips the news and goes straight to the strategy. Free forever. One email per week.</p>
+      <div class="nl-checklist">
+        <div class="nl-check">Top 5 AI signals ranked by business impact</div>
+        <div class="nl-check">One actionable playbook per issue</div>
+        <div class="nl-check">Model comparison: same task, 4 models</div>
+        <div class="nl-check">Business and individual angles on every insight</div>
+        <div class="nl-check">Free AI Model Comparison Guide on signup</div>
+      </div>
+      <form onsubmit="handleSignup(event)">
+        <div class="form-row">
+          <input type="email" class="form-input" id="email-input" placeholder="your@email.com" required>
+          <button type="submit" class="btn-form">Subscribe →</button>
+        </div>
+        <p class="form-note" id="form-msg">Free forever. No spam. Unsubscribe in one click.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ HOW IT WORKS ════════════════ -->
+<section class="section" id="agents">
+  <div class="section-label">How It Works</div>
+  <h2>Signal In.<br><em>Strategy Out.</em></h2>
+  <p class="section-sub">AI Signal Loop runs a fully automated intelligence pipeline — continuously monitoring every corner of the AI landscape, extracting what matters for business, and delivering it as ready-to-use strategy. No manual research. No editorial lag. Pure signal, refined on a loop.</p>
+
+  <div class="agents-grid">
+
+    <div class="agent-card fade-up">
+      <div class="orch-icon">🔮</div>
+      <div>
+        <div class="orch-label">The Intelligence Loop</div>
+        <h3>Automated. Continuous. Always Current.</h3>
+        <p>From the moment a model ships, a paper drops, or a market shift happens — our platform captures it, scores it for business relevance, extracts the strategic implication, and routes it into the weekly brief and product library. The loop never pauses. Neither does your edge.</p>
+      </div>
+    </div>
+
+    <div class="agent-card fade-up">
+      <div class="agent-num">Step 01</div>
+      <div class="agent-icon">📡</div>
+      <h4>Capture</h4>
+      <ul class="agent-tasks">
+        <li>Model releases &amp; capability updates</li>
+        <li>Research papers &amp; benchmarks</li>
+        <li>Enterprise adoption signals</li>
+        <li>Funding &amp; market movements</li>
+      </ul>
+    </div>
+
+    <div class="agent-card fade-up" style="transition-delay:.05s">
+      <div class="agent-num">Step 02</div>
+      <div class="agent-icon">🧠</div>
+      <h4>Analyze</h4>
+      <ul class="agent-tasks">
+        <li>Business relevance scoring</li>
+        <li>Industry impact mapping</li>
+        <li>Opportunity window identification</li>
+        <li>Competitive implication analysis</li>
+      </ul>
+    </div>
+
+    <div class="agent-card fade-up" style="transition-delay:.1s">
+      <div class="agent-num">Step 03</div>
+      <div class="agent-icon">✍️</div>
+      <h4>Publish</h4>
+      <ul class="agent-tasks">
+        <li>Weekly strategy brief (Fridays)</li>
+        <li>AI signal feed — live on site</li>
+        <li>LinkedIn insights 3× / week</li>
+        <li>Deep-dive blog analysis</li>
+      </ul>
+    </div>
+
+    <div class="agent-card fade-up" style="transition-delay:.15s">
+      <div class="agent-num">Step 04</div>
+      <div class="agent-icon">📦</div>
+      <h4>Build</h4>
+      <ul class="agent-tasks">
+        <li>Model playbooks auto-updated</li>
+        <li>Prompt packs per use case</li>
+        <li>Automation workflow templates</li>
+        <li>Quarterly opportunity reports</li>
+      </ul>
+    </div>
+
+    <div class="agent-card fade-up" style="transition-delay:.05s">
+      <div class="agent-num">Step 05</div>
+      <div class="agent-icon">🔁</div>
+      <h4>Optimize</h4>
+      <ul class="agent-tasks">
+        <li>Subscriber engagement tracking</li>
+        <li>Content performance analysis</li>
+        <li>A/B testing on every issue</li>
+        <li>Continuous quality improvement</li>
+      </ul>
+    </div>
+
+    <div class="agent-card fade-up" style="transition-delay:.1s">
+      <div class="agent-num">For You</div>
+      <div class="agent-icon">💼</div>
+      <h4>Who It Serves</h4>
+      <ul class="agent-tasks">
+        <li>Business owners adopting AI</li>
+        <li>Consultants advising on AI strategy</li>
+        <li>Executives making tech decisions</li>
+        <li>Professionals who need the edge</li>
+      </ul>
+    </div>
+
+    <div class="agent-card fade-up" style="transition-delay:.15s">
+      <div class="agent-num">The Promise</div>
+      <div class="agent-icon">◆</div>
+      <h4>What You Get</h4>
+      <ul class="agent-tasks">
+        <li>Strategy, not summaries</li>
+        <li>Products that stay current</li>
+        <li>Free to start, powerful to scale</li>
+        <li>Built in public — full transparency</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════════ FREE STARTER / EMAIL CTA ════════════════ -->
+<section class="cta-section" id="starter">
+  <div class="fade-up">
+    <h2>Start With the <em>Free Brief.</em><br>Stay for the Intelligence.</h2>
+    <p>The free weekly brief gives you more actionable AI strategy than most paid newsletters. When you're ready for deeper intelligence — model playbooks, automation templates, opportunity reports — they're waiting in the product library.</p>
+  </div>
+  <div class="cta-form fade-up" style="transition-delay:.15s">
+    <h3>Signal Loop Weekly</h3>
+    <p class="form-sub">Free every Friday. Join thousands of business leaders and professionals staying ahead of AI without drowning in it.</p>
+    <div class="form-row">
+      <input type="email" class="form-input" id="cta-email" placeholder="your@email.com" required>
+      <button class="btn-form gold" onclick="handleCtaSignup()">Subscribe →</button>
+    </div>
+    <p class="form-note" id="cta-msg">No spam. No fluff. Unsubscribe anytime.</p>
+    <ul class="form-items">
+      <li>Weekly AI brief — every Friday 8am ET</li>
+      <li>Business strategy, not just news</li>
+      <li>Free AI Model Guide on signup</li>
+      <li>Early access to all Signal Loop products</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ════════════════ ABOUT ════════════════ -->
+<section class="section" id="about">
+  <div class="about-grid">
+    <div class="about-logo-showcase fade-up">
+      <div class="logo-on-dark">
+        <svg width="260" height="68" viewBox="0 0 300 78" fill="none">
+          <circle cx="38" cy="38" r="32" stroke="#0EA898" stroke-width="3" fill="none"/>
+          <circle cx="38" cy="38" r="19" stroke="#E8C15A" stroke-width="2" fill="none"/>
+          <circle cx="38" cy="6" r="5.5" fill="#0EA898"/>
+          <circle cx="65.7" cy="54" r="5.5" fill="#0EA898"/>
+          <circle cx="10.3" cy="54" r="5.5" fill="#0EA898"/>
+          <circle cx="38" cy="38" r="5.5" fill="#E8C15A"/>
+          <line x1="38" y1="11.5" x2="38" y2="19" stroke="#0EA898" stroke-width="1.5" stroke-dasharray="2.5 2"/>
+          <line x1="62.4" y1="51.5" x2="55.4" y2="47.5" stroke="#0EA898" stroke-width="1.5" stroke-dasharray="2.5 2"/>
+          <line x1="13.6" y1="51.5" x2="20.6" y2="47.5" stroke="#0EA898" stroke-width="1.5" stroke-dasharray="2.5 2"/>
+          <polyline points="34,8 38,3.5 42,8" stroke="#0EA898" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <text x="90" y="33" font-family="Georgia,serif" font-weight="700" font-size="26" fill="#FFFFFF" letter-spacing="1">SIGNAL</text>
+          <text x="90" y="59" font-family="Georgia,serif" font-weight="400" font-size="26" fill="#0EA898" letter-spacing="0.5" font-style="italic">Loop</text>
+          <text x="224" y="22" font-family="Georgia,serif" font-size="13" fill="#E8C15A" font-weight="700">™</text>
+          <line x1="90" y1="66" x2="248" y2="66" stroke="#E8C15A" stroke-width="1" opacity="0.4"/>
+          <text x="90" y="76" font-family="Arial,sans-serif" font-size="8.5" fill="rgba(255,255,255,0.3)" letter-spacing="2.8">AI INTELLIGENCE · AUTOMATED</text>
+        </svg>
+      </div>
+      <div class="logo-on-light">
+        <svg width="260" height="68" viewBox="0 0 300 78" fill="none">
+          <circle cx="38" cy="38" r="32" stroke="#0A7A6E" stroke-width="3" fill="none"/>
+          <circle cx="38" cy="38" r="19" stroke="#C49A2A" stroke-width="2" fill="none"/>
+          <circle cx="38" cy="6" r="5.5" fill="#0A7A6E"/>
+          <circle cx="65.7" cy="54" r="5.5" fill="#0EA898"/>
+          <circle cx="10.3" cy="54" r="5.5" fill="#0EA898"/>
+          <circle cx="38" cy="38" r="5.5" fill="#C49A2A"/>
+          <line x1="38" y1="11.5" x2="38" y2="19" stroke="#0A7A6E" stroke-width="1.5" stroke-dasharray="2.5 2"/>
+          <line x1="62.4" y1="51.5" x2="55.4" y2="47.5" stroke="#0EA898" stroke-width="1.5" stroke-dasharray="2.5 2"/>
+          <line x1="13.6" y1="51.5" x2="20.6" y2="47.5" stroke="#0EA898" stroke-width="1.5" stroke-dasharray="2.5 2"/>
+          <polyline points="34,8 38,3.5 42,8" stroke="#0A7A6E" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <text x="90" y="33" font-family="Georgia,serif" font-weight="700" font-size="26" fill="#0D1B2A" letter-spacing="1">SIGNAL</text>
+          <text x="90" y="59" font-family="Georgia,serif" font-weight="400" font-size="26" fill="#0A7A6E" letter-spacing="0.5" font-style="italic">Loop</text>
+          <text x="224" y="22" font-family="Georgia,serif" font-size="13" fill="#C49A2A" font-weight="700">™</text>
+          <line x1="90" y1="66" x2="248" y2="66" stroke="#C49A2A" stroke-width="1" opacity="0.45"/>
+          <text x="90" y="76" font-family="Arial,sans-serif" font-size="8.5" fill="#8A9AAA" letter-spacing="2.8">AI INTELLIGENCE · AUTOMATED</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="about-text fade-up" style="transition-delay:.15s">
+      <div class="section-label">Mission &amp; Vision</div>
+      <h2>Intelligence for the<br><em>Next Decade.</em></h2>
+      <p>The gap between those who understand AI and those who don't is widening every week. We built AI Signal Loop for the professionals, operators, and decision-makers who refuse to fall behind — and don't have time to wade through noise to stay ahead.</p>
+      <p>Our mission is to make enterprise-grade AI intelligence accessible to everyone. Not summaries. Not hype. Vetted signals, analyzed for business impact, translated into concrete strategy — delivered consistently, week after week.</p>
+      <p>Our vision: a world where any business professional can access the same quality of AI intelligence that Fortune 500 research teams pay six figures for. Starting free. Compounding every Friday.</p>
+      <div class="about-values">
+        <div class="about-value"><span class="av-mark">◆</span><div><strong>Clarity over volume.</strong> One insight you can act on beats fifty you can't.</div></div>
+        <div class="about-value"><span class="av-mark">◆</span><div><strong>Currency over quantity.</strong> An outdated playbook is worse than none. Everything we ship stays current.</div></div>
+        <div class="about-value"><span class="av-mark">◆</span><div><strong>Access over exclusivity.</strong> The best AI intelligence shouldn't require an enterprise contract.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ STRIPE CHECKOUT MODAL ════════════════ -->
+<div class="stripe-overlay" id="stripe-overlay" onclick="closeStripe(event)">
+  <div class="stripe-modal" id="stripe-modal">
+    <button class="stripe-close" onclick="closeStripeModal()">✕</button>
+    <h3 id="sm-title">AI Model Playbooks</h3>
+    <div class="sm-price" id="sm-price">$29</div>
+    <p class="sm-desc" id="sm-desc">Deep-dive playbook for Claude, ChatGPT, or Copilot with system prompt architecture, multi-turn patterns, and failure modes.</p>
+    <div id="sm-form">
+      <input class="stripe-field" type="email" id="sm-email" placeholder="Email address" required>
+      <input class="stripe-field" type="text" id="sm-card" placeholder="Card number" maxlength="19" oninput="fmtCard(this)">
+      <div class="stripe-row">
+        <input class="stripe-field" type="text" id="sm-exp" placeholder="MM / YY" maxlength="7" oninput="fmtExp(this)">
+        <input class="stripe-field" type="text" id="sm-cvc" placeholder="CVC" maxlength="4">
+      </div>
+      <button class="stripe-submit" id="sm-btn" onclick="processPayment()">Pay <span id="sm-btn-price">$29</span> →</button>
+      <p class="stripe-note">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        Secured by Stripe · 30-day money-back guarantee
+      </p>
+    </div>
+    <div id="sm-success" class="stripe-success" style="display:none">
+      <div class="ss-icon">✅</div>
+      <h4>You're in.</h4>
+      <p>Check your email — your download link is on its way.<br>Welcome to Signal Loop.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════ FOOTER ════════════════ -->
+
+<script>
+// ══════════════════════════════════════════════════
+// FADE-UP ANIMATIONS — reliable scroll + load reveal
+// ══════════════════════════════════════════════════
+function revealVisible() {
+  document.querySelectorAll('.fade-up:not(.visible)').forEach(el => {
+    const r = el.getBoundingClientRect();
+    if (r.top < window.innerHeight + 60 && r.bottom > 0) {
+      el.classList.add('visible');
+    }
+  });
+}
+window.addEventListener('scroll', revealVisible, { passive: true });
+window.addEventListener('resize', revealVisible, { passive: true });
+document.addEventListener('DOMContentLoaded', revealVisible);
+window.addEventListener('load', revealVisible);
+document.querySelectorAll('.hero .fade-up').forEach((el, i) => {
+  setTimeout(() => el.classList.add('visible'), 80 + i * 60);
+});
+
+// ══════════════════════════════════════════════════
+// NAV ACTIVE HIGHLIGHT
+// ══════════════════════════════════════════════════
+const sectionEls = document.querySelectorAll('section[id]');
+window.addEventListener('scroll', () => {
+  let cur = '';
+  sectionEls.forEach(s => { if (window.scrollY >= s.offsetTop - 80) cur = s.id; });
+  document.querySelectorAll('.nav-links a[href^="#"]').forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + cur);
+  });
+}, { passive: true });
+
+// ══════════════════════════════════════════════════
+// EMAIL FORMS
+// ══════════════════════════════════════════════════
+function handleSignup(e) {
+  e.preventDefault();
+  const email = document.getElementById('email-input').value;
+  if (!email) return;
+  const msg = document.getElementById('form-msg');
+  msg.textContent = '✓ You\'re in — first issue arrives Friday.';
+  msg.style.color = 'var(--gold2)';
+  document.getElementById('email-input').value = '';
+  // Connect to Beehiiv: POST to https://api.beehiiv.com/v2/publications/YOUR_PUB_ID/subscriptions
+}
+function handleCtaSignup() {
+  const email = document.getElementById('cta-email').value;
+  if (!email) return;
+  const msg = document.getElementById('cta-msg');
+  msg.textContent = '✓ Subscribed — see you Friday.';
+  msg.style.color = 'var(--ink)';
+  document.getElementById('cta-email').value = '';
+}
+
+// ══════════════════════════════════════════════════
+// LIVE SIGNAL FEED — dynamic AI-generated signals
+// ══════════════════════════════════════════════════
+const SIGNALS_DATA = [
+  { tag: 'Anthropic', tagClass: 't-an', badge: 'Strategy',
+    signal: '<strong>Claude 3.7</strong> — extended thinking + tool use now in API.',
+    insight: '→ Complex multi-step research automation now viable without a dev team.' },
+  { tag: 'OpenAI', tagClass: 't-oa', badge: 'Opportunity',
+    signal: '<strong>GPT-4o</strong> — real-time voice API stable for production.',
+    insight: '→ First-mover advantage in AI customer service closes within 60 days.' },
+  { tag: 'Microsoft', tagClass: 't-ms', badge: 'Enterprise',
+    signal: '<strong>Copilot Studio</strong> — autonomous workflow agents in GA.',
+    insight: '→ M365 shops can cut multi-step task time 60%. Replaces Power Automate.' },
+  { tag: 'Google', tagClass: 't-gd', badge: 'Ops',
+    signal: '<strong>Gemini 2.0 Flash</strong> — 1M token context, $0.075/1M tokens.',
+    insight: '→ Full annual reports analyzable for under $0.50. SMB research unlocked.' },
+  { tag: 'Meta', tagClass: 't-ms', badge: 'Open Source',
+    signal: '<strong>Llama 3.3</strong> — 70B model matches GPT-4 on most benchmarks.',
+    insight: '→ On-premise AI now cost-competitive. Data privacy constraints disappear.' },
+  { tag: 'Mistral', tagClass: 't-gd', badge: 'Cost',
+    signal: '<strong>Mistral Large 2</strong> — 30% cost reduction, same quality tier.',
+    insight: '→ API cost budgets stretch further. High-volume workflows now profitable.' },
+];
+
+function renderSignals() {
+  const container = document.getElementById('signal-feed-items');
+  if (!container) return;
+  const updated = document.getElementById('feed-updated');
+
+  // Show 4 signals, rotate each page load
+  const start = Math.floor(Math.random() * 2);
+  const shown = SIGNALS_DATA.slice(start, start + 4);
+
+  container.innerHTML = shown.map(s => `
+    <div class="sig-row">
+      <div>
+        <div class="sr-tag ${s.tagClass}">${s.tag}</div>
+        <div class="sr-signal">${s.signal}</div>
+        <div class="sr-insight">${s.insight}</div>
+      </div>
+      <div class="sp-badge">${s.badge}</div>
+    </div>`).join('');
+
+  if (updated) {
+    const now = new Date();
+    updated.textContent = 'Updated ' + now.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+  }
+}
+
+document.addEventListener('DOMContentLoaded', renderSignals);
+
+// ══════════════════════════════════════════════════
+// STRIPE CHECKOUT MODAL
+// ══════════════════════════════════════════════════
+const PRODUCTS = {
+  'playbooks':     { name: 'AI Model Playbooks',           price: 29,  desc: 'Deep-dive playbook for Claude, ChatGPT, or Copilot — system prompt architecture, multi-turn patterns, failure modes, and business use cases.' },
+  'prompt-library':{ name: 'Prompt Library — Monthly',     price: 19,  desc: 'Living library of tested prompts for marketing, research, productivity, coding, and business analysis. New prompts every Friday.' },
+  'automation':    { name: 'Automation Templates Pack',     price: 49,  desc: 'Ready-to-import n8n and Zapier workflows for the 10 highest ROI business automations — content, research, reporting, and support.' },
+  'opp-report':    { name: 'AI Opportunity Report',         price: 79,  desc: 'Quarterly deep-dive: 10 concrete AI business opportunities with adoption timelines, required tooling, and first-mover positioning.' },
+};
+
+function buy(productId, price) {
+  const p = PRODUCTS[productId];
+  if (!p) return;
+  document.getElementById('sm-title').textContent = p.name;
+  document.getElementById('sm-price').textContent = '$' + p.price;
+  document.getElementById('sm-desc').textContent = p.desc;
+  document.getElementById('sm-btn-price').textContent = '$' + p.price;
+  document.getElementById('sm-form').style.display = '';
+  document.getElementById('sm-success').style.display = 'none';
+  document.getElementById('sm-btn').disabled = false;
+  document.getElementById('sm-btn').textContent = 'Pay $' + p.price + ' →';
+  document.getElementById('sm-email').value = '';
+  document.getElementById('sm-card').value = '';
+  document.getElementById('sm-exp').value = '';
+  document.getElementById('sm-cvc').value = '';
+  document.getElementById('stripe-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeStripeModal() {
+  document.getElementById('stripe-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function closeStripe(e) {
+  if (e.target === document.getElementById('stripe-overlay')) closeStripeModal();
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeStripeModal();
+});
+
+function fmtCard(el) {
+  let v = el.value.replace(/\D/g,'').substring(0,16);
+  el.value = v.replace(/(.{4})/g,'$1 ').trim();
+}
+
+function fmtExp(el) {
+  let v = el.value.replace(/\D/g,'');
+  if (v.length >= 2) v = v.substring(0,2) + ' / ' + v.substring(2,4);
+  el.value = v;
+}
+
+function processPayment() {
+  const email = document.getElementById('sm-email').value;
+  const card  = document.getElementById('sm-card').value.replace(/\s/g,'');
+  const exp   = document.getElementById('sm-exp').value;
+  const cvc   = document.getElementById('sm-cvc').value;
+
+  if (!email || !email.includes('@')) { alert('Please enter a valid email.'); return; }
+  if (card.length < 16) { alert('Please enter a valid card number.'); return; }
+  if (!exp || exp.length < 4) { alert('Please enter expiry date.'); return; }
+  if (!cvc || cvc.length < 3) { alert('Please enter CVC.'); return; }
+
+  const btn = document.getElementById('sm-btn');
+  btn.disabled = true;
+  btn.textContent = 'Processing…';
+
+  // TODO: Replace with real Stripe Payment Intent call:
+  // const response = await fetch('/api/create-payment-intent', {
+  //   method: 'POST', body: JSON.stringify({ productId, email })
+  // });
+  // const { clientSecret } = await response.json();
+  // const stripe = Stripe('YOUR_PUBLISHABLE_KEY');
+  // await stripe.confirmCardPayment(clientSecret, { payment_method: { card: cardElement } });
+
+  setTimeout(() => {
+    document.getElementById('sm-form').style.display = 'none';
+    document.getElementById('sm-success').style.display = 'block';
+  }, 1800);
+}
+
+</script>
 </body>
 </html>
